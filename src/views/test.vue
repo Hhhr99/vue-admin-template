@@ -44,32 +44,33 @@ export default {
         callback(new Error('两次密码必须相同'))
       }
     }
+
     return {
       formData: {
         mobile: '',
         password: '',
         password2: ''
+      },
+      rules: {
+        mobile: [
+          // 这里可以放各种规则
+          { required: true, message: '该项不能为空', trigger: 'blur' },
+          { pattern: /^1[3-9]\d{9}$/, message: '请输入合法手机号', trigger: 'blur' }
+        ],
+        password: [
+          // 这里可以放各种规则
+          { required: true, message: '该项不能为空', trigger: 'blur' },
+          { min: 6, max: 16, message: '密码长度在 6-16 之间', trigger: 'blur' }
+        ],
+        password2: [
+          { required: true, message: '该项不能为空', trigger: 'blur' },
+          // 如果原来的规则填写方法已经满足不了我们的需求
+          // 饿了么自定义校验函数进行处理
+          // 指定一个校验函数 validator
+          { trigger: 'blur', validator: checkPassword2 }
+        ]
       }
     }
-  },
-  rules: {
-    mobile: [
-      // 这里可以放各种规则
-      { required: true, message: '该项不能为空', trigger: 'blur' },
-      { pattern: /^1[3-9]\d{9}$/, message: '请输入合法手机号', trigger: 'blur' }
-    ],
-    password: [
-      // 这里可以放各种规则
-      { required: true, message: '该项不能为空', trigger: 'blur' },
-      { min: 6, max: 16, message: '密码长度在 6-16 之间', trigger: 'blur' }
-    ],
-    password2: [
-      { required: true, message: '该项不能为空', trigger: 'blur' },
-      // 如果原来的规则填写方法已经满足不了我们的需求
-      // 饿了么自定义校验函数进行处理
-      // 指定一个校验函数 validator
-      { trigger: 'blur', validator: checkPassword2 }
-    ]
   }
 }
 </script>

@@ -8,4 +8,3 @@ export default {
   mutations,
   actions
 }
-
