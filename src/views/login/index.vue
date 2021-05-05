@@ -57,7 +57,7 @@
         type="primary"
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
-      >登录{{ $store.state.user.token }}
+      >登录{{ $store.getters.token }}
       </el-button>
 
       <div class="tips">
