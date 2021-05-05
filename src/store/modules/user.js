@@ -1,9 +1,14 @@
 import { login } from '@/api/user'
+import { setToken, getToken } from '@/utils/auth'
 const state = {
-  token: null
+  // token: null
+  token: getToken()
 }
 const mutations = {
   setToken(state, data) {
+    // 1. 数据存放在 Cookies 持久化
+    setToken(data)
+    // 2. 存放和在 state 方便 vue 使用
     state.token = data
   },
   removeToken(state) {
