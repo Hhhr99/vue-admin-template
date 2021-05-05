@@ -1,5 +1,6 @@
 import { login } from '@/api/user'
 import { setToken, getToken } from '@/utils/auth'
+
 const state = {
   // token: null
   token: getToken()
@@ -17,14 +18,19 @@ const mutations = {
 }
 const actions = {
   async login(store, data) {
-    // 1. 发请求
-    const res = await login(data)
-    // console.log(res.data)
-    // const token = res
-    // axios 数据包裹在 res.data 中
-    // 后端返回的 token 字段也要 data
-    // 2. 拿到成功的 token
-    store.commit('setToken', res)
+    try {
+      // 1. 发请求
+      const res = await login(data)
+      // console.log(res.data)
+      // const token = res
+      // axios 数据包裹在 res.data 中
+      // 后端返回的 token 字段也要 data
+      // 2. 拿到成功的 token
+      store.commit('setToken', res)
+    } catch (error) {
+      console.log('这里报错了')
+      console.log(error)
+    }
   }
 }
 export default {
