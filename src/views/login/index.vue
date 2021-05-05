@@ -142,6 +142,7 @@ export default {
       })
     },
     async handleLogin() {
+      console.log(111)
       // 校验 表单的 validate 函数
       await this.$refs.loginForm.validate()
       // 显示加载中状态
