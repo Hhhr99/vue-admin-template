@@ -19,6 +19,9 @@ service.interceptors.response.use(
       return data
     } else {
       // 数据层面出了问题
+      // 如果是数据层面的失败
+      // 也需要提示用户
+      // 还要讲当前的 promise 拒绝掉
       Message.error(message)
       return Promise.reject(new Error(message))
     }
