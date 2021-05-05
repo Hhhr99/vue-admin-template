@@ -151,6 +151,8 @@ export default {
       await this.$store.dispatch('user/login', this.loginForm)
 
       this.loading = false
+
+      this.$router.push('/')
       // login(this.loginForm)
       // this.$store.dispatch('user/login', this.loginForm)
       // this.$refs.loginForm.validate(valid => {
