@@ -141,9 +141,17 @@ export default {
         this.$refs.password.focus()
       })
     },
-    handleLogin() {
+    async handleLogin() {
+      // 校验 表单的 validate 函数
+      await this.$refs.loginForm.validate()
+      // 显示加载中状态
+      this.loading = true
+      // 发请求
+      await this.$store.dispatch('user/login', this.loginForm)
+
+      this.loading = false
       // login(this.loginForm)
-      this.$store.dispatch('user/login', this.loginForm)
+      // this.$store.dispatch('user/login', this.loginForm)
       // this.$refs.loginForm.validate(valid => {
       //   if (valid) {
       //     this.loading = true
@@ -158,6 +166,7 @@ export default {
       //     return false
       //   }
       // })
+
     }
   }
 }
@@ -188,16 +197,16 @@ $cursor: #fff;
 
     input {
       background: transparent;
-      border: 0px;
+      border: 0;
       -webkit-appearance: none;
-      border-radius: 0px;
+      border-radius: 0;
       padding: 12px 5px 12px 15px;
       color: $light_gray;
       height: 47px;
       caret-color: $cursor;
 
       &:-webkit-autofill {
-        box-shadow: 0 0 0px 1000px $bg inset !important;
+        box-shadow: 0 0 0 1000px $bg inset !important;
         -webkit-text-fill-color: $cursor !important;
       }
     }
