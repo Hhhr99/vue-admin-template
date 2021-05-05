@@ -19,7 +19,7 @@ const actions = {
   async login(store, data) {
     // 1. 发请求
     const res = await login(data)
-    console.log(res.data)
+    // console.log(res.data)
     // const token = res
     // axios 数据包裹在 res.data 中
     // 后端返回的 token 字段也要 data

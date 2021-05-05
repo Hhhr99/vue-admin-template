@@ -12,21 +12,24 @@ const service = axios.create({
 service.interceptors.request.use()
 
 // 响应拦截器
-service.interceptors.response.use(
-  res => {
-    const { success, message, data } = res.data
-    if (success) {
-      return data
-    } else {
-      // 数据层面出了问题
-      Message.error(message)
-      return Promise.reject(new Error(message))
-    }
-  },
-  err => {
-    Message.error(err.message)
-    return Promise.reject(err)
-  }
-)
-
+service.interceptors.response.use(res => {
+  const { data } = res.data
+  return data
+})
+// service.interceptors.response.use(
+//   res => {
+//     const { success, message, data } = res.data
+//     if (success) {
+//       return data
+//     } else {
+//       // 数据层面出了问题
+//       Message.error(message)
+//       return Promise.reject(new Error(message))
+//     }
+//   },
+//   err => {
+//     Message.error(err.message)
+//     return Promise.reject(err)
+//   }
+// )
 export default service
