@@ -1,9 +1,8 @@
-import { login } from '@/api/user'
+import { login, getUserInfo } from '@/api/user'
 import { setToken, getToken } from '@/utils/auth'
-
 const state = {
-  // token: null
-  token: getToken()
+  token: getToken(),
+  userInfo: {}
 }
 const mutations = {
   setToken(state, data) {
@@ -14,6 +13,12 @@ const mutations = {
   },
   removeToken(state) {
     state.token = null
+  },
+  setUserInfo(state, data) {
+    state.userInfo = { ...data }
+  },
+  removeUserInfo(state) {
+    state.userInfo = {}
   }
 }
 const actions = {
@@ -21,8 +26,9 @@ const actions = {
     try {
       // 1. 发请求
       const res = await login(data)
-      // console.log(res.data)
-      console.log(11)
+      console.log('这里成功了')
+      console.log(res)
+      // console.log(res.data.data)
       // const token = res
       // axios 数据包裹在 res.data 中
       // 后端返回的 token 字段也要 data
@@ -32,8 +38,13 @@ const actions = {
       console.log('这里报错了')
       console.log(error)
     }
+  },
+  async getUserInfo(store) {
+    const res = await getUserInfo()
+    store.commit('setUserInfo', res)
   }
 }
+
 export default {
   namespaced: true,
   state,

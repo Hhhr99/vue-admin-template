@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-
+// 登录接口
 export function login(data) {
   return request({
     url: '/sys/login',
@@ -7,18 +7,10 @@ export function login(data) {
     data
   })
 }
-
-export function getInfo(token) {
+// 获取用户基本资料
+export function getUserInfo() {
   return request({
-    url: '/vue-admin-template/user/info',
-    method: 'get',
-    params: { token }
-  })
-}
-
-export function logout() {
-  return request({
-    url: '/vue-admin-template/user/logout',
-    method: 'post'
+    method: 'post',
+    url: '/sys/profile'
   })
 }
