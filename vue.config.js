@@ -35,6 +35,18 @@ module.exports = {
     overlay: {
       warnings: false,
       errors: true
+    },
+    // 针对开发服务器设置转发配置
+    // 现在所有的请求无论页面请求还是数据请求
+    // 都是发到 npm run dev 开启的 8888
+    // 这里需要辨认哪些需要转向 java
+    proxy: {
+      // 这里以 key: value 的形式指定
+      // 需要转向的 url 类型: 转向的目的地
+      '/api': {
+        target: 'http://ihrm-java.itheima.net/',
+        changeOrigin: true
+      }
     }
   },
   configureWebpack: {
