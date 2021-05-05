@@ -57,7 +57,7 @@
         type="primary"
         style="width: 100%; margin-bottom: 30px"
         @click.native.prevent="handleLogin"
-      >登录
+      >登录{{ $store.state.user.token }}
       </el-button>
 
       <div class="tips">
@@ -72,7 +72,7 @@
 <script>
 import { validMobile } from '@/utils/validate'
 
-import { login } from '@/api/user'
+// import { login } from '@/api/user'
 
 export default {
   name: 'Login',
@@ -104,8 +104,8 @@ export default {
 
     return {
       loginForm: {
-        mobile: 'admin',
-        password: '111111'
+        mobile: '13800000002',
+        password: '123456'
       },
       loginRules: {
         mobile: [
@@ -142,7 +142,8 @@ export default {
       })
     },
     handleLogin() {
-      login(this.loginForm)
+      // login(this.loginForm)
+      this.$store.dispatch('user/login', this.loginForm)
       // this.$refs.loginForm.validate(valid => {
       //   if (valid) {
       //     this.loading = true
