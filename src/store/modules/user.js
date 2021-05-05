@@ -1,5 +1,6 @@
-import { login, getUserInfo } from '@/api/user'
+import { login, getUserInfo, getUserDetailById } from '@/api/user'
 import { setToken, getToken } from '@/utils/auth'
+
 const state = {
   token: getToken(),
   userInfo: {}
@@ -40,8 +41,16 @@ const actions = {
     }
   },
   async getUserInfo(store) {
-    const res = await getUserInfo()
-    store.commit('setUserInfo', res)
+    // 获取基本信息这里不够
+    // 还需要在此之后获取详情
+    const simpleData = await getUserInfo()
+    const detail = await getUserDetailById(simpleData.userId)
+
+    const data = {
+      ...simpleData,
+      ...detail
+    }
+    store.commit('setUserInfo', data)
   }
 }
 
