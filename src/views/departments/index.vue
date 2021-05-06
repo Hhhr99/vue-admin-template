@@ -27,7 +27,38 @@
           </el-col>
         </el-row>
         <!-- 以上是头部的公司信息, 下面是树形的部门结构 -->
-        <el-tree :data="departs" :props="{label: 'name'}" :default-expand-all="true"/>
+        <el-tree :data="departs" :props="{label: 'name'}" :default-expand-all="true">
+          <!-- 作用域插槽需要指定两个东西
+          1. 插槽名字
+          2. 接收数据的形参 -->
+          <template #default="scoped">
+            <el-row type="flex" justify="space-between" align="middle" style="width: 100%; height: 40px">
+              <el-col>
+                <span>{{ scoped.data.name }}</span>
+              </el-col>
+              <el-col :span="4">
+                <el-row type="flex" justify="end">
+                  <!-- 两个内容 -->
+                  <el-col>{{ scoped.data.manager }}</el-col>
+                  <el-col>
+                    <!-- 下拉菜单 element -->
+                    <el-dropdown>
+                      <span>
+                        操作<i class="el-icon-arrow-down"/>
+                      </span>
+                      <!-- 下拉菜单 -->
+                      <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>添加子部门</el-dropdown-item>
+                        <el-dropdown-item>编辑部门</el-dropdown-item>
+                        <el-dropdown-item>删除部门</el-dropdown-item>
+                      </el-dropdown-menu>
+                    </el-dropdown>
+                  </el-col>
+                </el-row>
+              </el-col>
+            </el-row>
+          </template>
+        </el-tree>
       </el-card>
     </div>
   </div>
@@ -40,17 +71,21 @@ export default {
       departs: [
         {
           name: '总裁办',
+          manager: '老王',
           children: [
             {
-              name: '董事会'
+              name: '董事会',
+              manager: '小王'
             }
           ]
         },
         {
-          name: '行政部'
+          name: '行政部',
+          manager: '中王'
         },
         {
-          name: '人事部'
+          name: '人事部',
+          manager: '小王'
         }
       ]
     }
