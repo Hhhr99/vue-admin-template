@@ -1,6 +1,16 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
+import router from '@/router'
+
+import { getTime } from '@/utils/auth'
+
+const checkTimeout = () => {
+  const currentTime = (new Date()).getTime()
+  const loginTime = getTime()
+  const duration = 1000 * 60 * 60 * 2
+  return currentTime - loginTime > duration
+}
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
@@ -14,7 +24,14 @@ service.interceptors.request.use(
     const token = store.getters.token
     // 如果已经有 token 就带在 config 上面
     if (token) {
-      config.headers.Authorization = 'Bearer ' + token
+      if (checkTimeout()) {
+        // 退出 + 报错
+        store.dispatch('user/logout')
+        router.push('/login')
+        return Promise.reject(new Error('token 已超时'))
+      } else {
+        config.headers.Authorization = 'Bearer ' + token
+      }
     }
     return config
   },

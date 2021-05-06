@@ -1,5 +1,5 @@
 import { login, getUserInfo, getUserDetailById } from '@/api/user'
-import { setToken, getToken, removeToken } from '@/utils/auth'
+import { setToken, getToken, removeToken,setTime  } from '@/utils/auth'
 
 const state = {
   token: getToken(),
@@ -36,6 +36,7 @@ const actions = {
       // 后端返回的 token 字段也要 data
       // 2. 拿到成功的 token
       store.commit('setToken', res)
+      setTime()
     } catch (error) {
       console.log('这里报错了')
       console.log(error)
