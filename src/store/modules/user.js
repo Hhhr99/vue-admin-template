@@ -1,5 +1,5 @@
 import { login, getUserInfo, getUserDetailById } from '@/api/user'
-import { setToken, getToken } from '@/utils/auth'
+import { setToken, getToken, removeToken } from '@/utils/auth'
 
 const state = {
   token: getToken(),
@@ -14,6 +14,7 @@ const mutations = {
   },
   removeToken(state) {
     state.token = null
+    removeToken()
   },
   setUserInfo(state, data) {
     state.userInfo = { ...data }
@@ -51,6 +52,10 @@ const actions = {
       ...detail
     }
     store.commit('setUserInfo', data)
+  },
+  async logout(store) {
+    store.commit('removeToken')
+    store.commit('removeUserInfo')
   }
 }
 
