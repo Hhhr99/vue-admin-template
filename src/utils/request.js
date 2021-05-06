@@ -57,6 +57,13 @@ service.interceptors.response.use(
     }
   },
   err => {
+    // 我们的当前项目如果token出错会直接导致网络请求层面的失败
+    // 处理应该写在这
+    console.dir(err)
+    if (err.response && err.response.data && err.response.data.code === 10002) {
+      store.dispatch('user/logout')
+      router.push('/login')
+    }
     Message.error(err.message)
     return Promise.reject(err)
   }
