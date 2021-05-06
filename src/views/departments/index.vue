@@ -26,13 +26,36 @@
             </el-row>
           </el-col>
         </el-row>
+        <!-- 以上是头部的公司信息, 下面是树形的部门结构 -->
+        <el-tree :data="departs" :props="{label: 'name'}" :default-expand-all="true"/>
       </el-card>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      departs: [
+        {
+          name: '总裁办',
+          children: [
+            {
+              name: '董事会'
+            }
+          ]
+        },
+        {
+          name: '行政部'
+        },
+        {
+          name: '人事部'
+        }
+      ]
+    }
+  }
+}
 </script>
 
 <style scoped>
