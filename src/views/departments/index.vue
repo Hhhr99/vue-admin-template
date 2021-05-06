@@ -1,9 +1,6 @@
 <template>
   <div class="dashboard-container">
     <div class="app-container">
-      <h2>
-        组织架构
-      </h2>
       <el-card class="tree-card">
         <!-- 用了一个行列布局 -->
         <el-row type="flex" justify="space-between" align="middle" style="height: 40px">
