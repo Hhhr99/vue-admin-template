@@ -16,7 +16,7 @@
             </span>
             <!-- 下拉菜单 -->
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>添加子部门</el-dropdown-item>
+              <el-dropdown-item @click.native="addDepartment">添加子部门</el-dropdown-item>
               <el-dropdown-item v-if="!isRoot">修改部门</el-dropdown-item>
               <!--              <el-dropdown-item v-if="!isRoot">删除部门</el-dropdown-item>-->
               <el-dropdown-item v-if="!isRoot" @click.native="delDepartment">删除部门</el-dropdown-item>
@@ -29,7 +29,8 @@
 </template>
 
 <script>
-import { delDepartment } from '@/api/departments'
+// eslint-disable-next-line no-unused-vars
+import { delDepartment, addDepartment } from '@/api/departments'
 
 export default {
   props: {
@@ -44,14 +45,21 @@ export default {
   },
   methods: {
     async delDepartment() {
-      // 二次校验
-      await this.$confirm('是否确认删除')
-      // 核心就是发请求
-      await delDepartment(this.treeNode.id)
-      // 提示用户
-      this.$message.success('删除成功')
-      // 更新页面
-      this.$emit('delDepartment')
+      try {
+        // 二次校验
+        await this.$confirm('是否确认删除')
+        // 核心就是发请求
+        await delDepartment(this.treeNode.id)
+        // 提示用户
+        this.$message.success('删除成功')
+        // 更新页面
+        this.$emit('delDepartment')
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    addDepartment() {
+      this.$emit('addDepartment')
     }
   }
 }

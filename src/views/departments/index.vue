@@ -12,10 +12,11 @@
           2. 接收数据的形参 -->
           <template #default="scoped">
             <!--            <TreeTools :tree-node="scoped.data" :is-root="false"/>-->
-            <TreeTools :tree-node="scoped.data" :is-root="false" @delDepartment="getDepartments"/>
+            <TreeTools :tree-node="scoped.data" :is-root="false" @addDepartment="addDepartment" @delDepartment="getDepartments"/>
           </template>
         </el-tree>
       </el-card>
+      <AddDept :show-dialog="showDialog"></AddDept>
     </div>
   </div>
 </template>
@@ -24,13 +25,16 @@
 import TreeTools from './components/tree-tools'
 import { getDepartments } from '@/api/departments'
 import { listToTreeData } from '@/utils'
+import AddDept from '@/views/departments/components/add-dept'
 
 export default {
   components: {
+    AddDept,
     TreeTools
   },
   data() {
     return {
+      showDialog: false,
       departs: []
     }
   },
@@ -42,6 +46,9 @@ export default {
       const res = await getDepartments()
       console.log(res)
       this.departs = listToTreeData(res.depts, '')
+    },
+    addDepartment() {
+      this.showDialog = true
     }
   }
 }
