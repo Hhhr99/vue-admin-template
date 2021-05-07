@@ -45,7 +45,9 @@ export function parseTime(time, cFormat) {
   const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
     const value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
-    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value ] }
+    if (key === 'a') {
+      return ['日', '一', '二', '三', '四', '五', '六'][value]
+    }
     return value.toString().padStart(2, '0')
   })
   return time_str
@@ -114,4 +116,22 @@ export function param2Obj(url) {
     }
   })
   return obj
+}
+
+export function listToTreeData(list, pid) {
+  // 1. 遍历列表的所有元素
+  list.forEach(item => {
+    // 2. 顶级部门不管，只找属于别人子部门的元素
+    if (item.pid !== pid) {
+      // 3. 找到府部门推进去
+      const parent = list.find(el => el.id === item.pid)
+      if (parent) {
+        // 不一定有 children 做一个保底默认值
+        parent.children = parent.children || []
+        parent.children.push(item)
+      }
+    }
+  })
+  // 4. return 在顶级数据当中，要将刚刚被 放入 children 的属于其他部门的子部门过滤掉
+  return list.filter(item => item.pid === pid)
 }
