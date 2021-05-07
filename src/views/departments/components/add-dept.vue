@@ -11,7 +11,9 @@
         <el-input v-model="formData.code" style="width:80%" placeholder="1-50个字符"/>
       </el-form-item>
       <el-form-item label="部门负责人" prop="manager">
-        <el-select v-model="formData.manager" style="width:80%" placeholder="请选择" value/>
+        <el-select v-model="formData.manager" style="width:80%" placeholder="请选择" @focus="getEmployeeSimple">
+          <el-option v-for="item in employeeList" :key="item.id" :value="item.username" :label="item.username"/>
+        </el-select>
       </el-form-item>
       <el-form-item label="部门介绍" prop="introduce">
         <el-input v-model="formData.introduce" style="width:80%" placeholder="1-300个字符" type="textarea" :rows="3"/>
@@ -29,6 +31,7 @@
 </template>
 <script>
 import { getDepartments } from '@/api/departments'
+import { getEmployeeSimple } from '@/api/employees'
 
 export default {
   name: 'AddDept',
@@ -92,7 +95,14 @@ export default {
           { max: 50, message: '不能超过50个字符', trigger: 'blur' },
           { trigger: 'blur', validator: checkRepeatName }
         ]
-      }
+      },
+      employeeList: []
+    }
+  },
+  methods: {
+    async getEmployeeSimple() {
+      this.employeeList = await getEmployeeSimple()
+      console.log(this.employeeList)
     }
   }
 }
