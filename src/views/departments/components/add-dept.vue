@@ -59,6 +59,14 @@ export default {
         callback()
       }
     }
+
+    const checkRepeatCode = async(rule, value, callbakc) => {
+      // 1. 全部部门列表
+      const { depts } = await getDepartments()
+      // 2. 当前用户输入的value
+      const isRepeat = depts.some(item => item.name === value)
+      isRepeat ? callbakc(new Error('部门代码不能重复')) : callbakc()
+    }
     return {
       formData: {
         code: '',
@@ -69,7 +77,8 @@ export default {
       rules: {
         code: [
           { required: true, message: '该项不能为空', trigger: 'blur' },
-          { max: 50, message: '不能超过50个字符', trigger: 'blur' }
+          { max: 50, message: '不能超过50个字符', trigger: 'blur' },
+          { trigger: 'blur', validator: checkRepeatCode }
         ],
         introduce: [
           { required: true, message: '该项不能为空', trigger: 'blur' },
