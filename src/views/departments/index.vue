@@ -3,60 +3,15 @@
     <div class="app-container">
       <el-card class="tree-card">
         <!-- 用了一个行列布局 -->
-        <el-row type="flex" justify="space-between" align="middle" style="height: 40px">
-          <el-col>
-            <strong><i class="el-icon-s-home"/> 江苏传智播客教育科技股份有限公司</strong>
-          </el-col>
-          <el-col :span="4">
-            <el-row type="flex" justify="end">
-              <!-- 两个内容 -->
-              <el-col>负责人</el-col>
-              <el-col>
-                <!-- 下拉菜单 element -->
-                <el-dropdown>
-                  <span>
-                    操作<i class="el-icon-arrow-down"/>
-                  </span>
-                  <!-- 下拉菜单 -->
-                  <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>添加子部门</el-dropdown-item>
-                  </el-dropdown-menu>
-                </el-dropdown>
-              </el-col>
-            </el-row>
-          </el-col>
-        </el-row>
+        <TreeTools :tree-node="{name: '江苏传智播客教育科技股份有限公司', manager: '负责人'}" :is-root="true"/>
+        <hr>
         <!-- 以上是头部的公司信息, 下面是树形的部门结构 -->
         <el-tree :data="departs" :props="{label: 'name'}" :default-expand-all="true">
           <!-- 作用域插槽需要指定两个东西
           1. 插槽名字
           2. 接收数据的形参 -->
           <template #default="scoped">
-            <el-row type="flex" justify="space-between" align="middle" style="width: 100%; height: 40px">
-              <el-col>
-                <span>{{ scoped.data.name }}</span>
-              </el-col>
-              <el-col :span="4">
-                <el-row type="flex" justify="end">
-                  <!-- 两个内容 -->
-                  <el-col>{{ scoped.data.manager }}</el-col>
-                  <el-col>
-                    <!-- 下拉菜单 element -->
-                    <el-dropdown>
-                      <span>
-                        操作<i class="el-icon-arrow-down"/>
-                      </span>
-                      <!-- 下拉菜单 -->
-                      <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>添加子部门</el-dropdown-item>
-                        <el-dropdown-item>编辑部门</el-dropdown-item>
-                        <el-dropdown-item>删除部门</el-dropdown-item>
-                      </el-dropdown-menu>
-                    </el-dropdown>
-                  </el-col>
-                </el-row>
-              </el-col>
-            </el-row>
+            <TreeTools :tree-node="scoped.data" :is-root="false"/>
           </template>
         </el-tree>
       </el-card>
@@ -65,29 +20,26 @@
 </template>
 
 <script>
+import TreeTools from './components/tree-tools'
+import { getDepartments } from '@/api/departments'
+
 export default {
+  components: {
+    TreeTools
+  },
   data() {
     return {
-      departs: [
-        {
-          name: '总裁办',
-          manager: '老王',
-          children: [
-            {
-              name: '董事会',
-              manager: '小王'
-            }
-          ]
-        },
-        {
-          name: '行政部',
-          manager: '中王'
-        },
-        {
-          name: '人事部',
-          manager: '小王'
-        }
-      ]
+      departs: []
+    }
+  },
+  created() {
+    this.getDepartments()
+  },
+  methods: {
+    async getDepartments() {
+      const res = await getDepartments()
+      console.log(res)
+      this.departs = res.depts
     }
   }
 }
