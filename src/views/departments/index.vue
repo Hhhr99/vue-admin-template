@@ -3,7 +3,7 @@
     <div class="app-container">
       <el-card class="tree-card">
         <!-- 用了一个行列布局 -->
-        <TreeTools :tree-node="{name: '江苏传智播客教育科技股份有限公司', manager: '负责人'}" :is-root="true"/>
+        <TreeTools :tree-node="company" :is-root="true" @addDepartment="addDepartment"/>
         <hr>
         <!-- 以上是头部的公司信息, 下面是树形的部门结构 -->
         <el-tree :data="departs" :props="{label: 'name'}" :default-expand-all="true">
@@ -37,6 +37,11 @@ export default {
   data() {
     return {
       showDialog: false,
+      company: {
+        name: '超级无敌大帅哥',
+        manager: '负责人',
+        id: ''
+      },
       departs: [],
       treeNode: {}
     }
