@@ -59,7 +59,8 @@ export default {
       }
     },
     addDepartment() {
-      this.$emit('addDepartment')
+      console.log(this.treeNode)
+      this.$emit('addDepartment', this.treeNode)
     }
   }
 }

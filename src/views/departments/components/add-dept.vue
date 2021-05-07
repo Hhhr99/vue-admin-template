@@ -28,15 +28,37 @@
   </el-dialog>
 </template>
 <script>
+import { getDepartments } from '@/api/departments'
+
 export default {
   name: 'AddDept',
   props: {
     showDialog: {
       type: Boolean,
       default: false
+    },
+    treeNode: {
+      type: Object,
+      required: true
     }
   },
   data() {
+    const checkRepeatName = async(rule, value, callback) => {
+      // 同一部门下不能有重名
+      // 1. 所有部门列表
+      const { depts } = await getDepartments()
+      // 2. 当前被点击座位父部门的那个id
+      const isRepeat = depts
+        // 找到同一部门下的子部门 得到一个数组
+        .filter(item => item.pid === this.treeNode.id)
+        // 找到是否存在跟当前用户输入相同的名称 得到布尔值
+        .some(item => item.name === value)
+      if (isRepeat) {
+        callback(new Error('同部门下不能重名'))
+      } else {
+        callback()
+      }
+    }
     return {
       formData: {
         code: '',
@@ -58,7 +80,8 @@ export default {
         ],
         name: [
           { required: true, message: '该项不能为空', trigger: 'blur' },
-          { max: 50, message: '不能超过50个字符', trigger: 'blur' }
+          { max: 50, message: '不能超过50个字符', trigger: 'blur' },
+          { trigger: 'blur', validator: checkRepeatName }
         ]
       }
     }
