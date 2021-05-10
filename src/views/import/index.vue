@@ -16,7 +16,9 @@ export default {
         '手机号': 'mobile',
         '姓名': 'username',
         '转正日期': 'correctionTime',
-        '工号': 'workNumber'
+        '工号': 'workNumber',
+        '部门': 'departmentName',
+        '聘用形式': 'formOfEmployment'
       }
       // 现在我们的  data.results 是一个数组, 里面包裹着多个用户
       // 我希望遍历这个数组, 拿出每个用户单独处理
