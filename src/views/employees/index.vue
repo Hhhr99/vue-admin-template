@@ -55,7 +55,8 @@
 
 <script>
 import { getEmployeeList } from '@/api/employees'
-
+// 引入枚举数据, 方便聘用形式的格式化
+import employmentEnum from '@/api/constant/employees'
 export default {
   data() {
     return {
@@ -86,7 +87,8 @@ export default {
       this.getEmployeeList()
     },
     formatFormEmployment(row, column, cellValue) {
-      return cellValue === 1 ? '正式员工' : '临时工'
+      const obj = employmentEnum.hireType.find(item => item.id === cellValue)
+      return obj ? obj.value : '未知'
     }
   }
 }
