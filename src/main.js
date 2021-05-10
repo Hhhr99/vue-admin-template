@@ -43,8 +43,19 @@ import myComponents from '@/components'
 Vue.use(myComponents)
 
 // 过滤器的注册
-import { formateTime } from '@/filters'
-Vue.filter('formateTime', formateTime)
+// import { formateDate } from '@/filters'
+// Vue.filter('formateDate', formateDate)
+
+import * as filters from '@/filters'
+// console.log(filters)
+// Vue.filter(函数名, 函数体) 就可以注册过滤器
+for (const key in filters) {
+  const name = key
+  console.log(name)
+  const fn = filters[key]
+  console.log(fn)
+  Vue.filter(name, fn)
+}
 
 new Vue({
   el: '#app',
