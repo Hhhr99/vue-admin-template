@@ -11,7 +11,9 @@
         <el-input v-model="formData.code" style="width:80%" placeholder="1-50个字符"/>
       </el-form-item>
       <el-form-item ref="addDept" label="部门负责人" prop="manager">
-        <el-select v-model="formData.manager" style="width:80%" placeholder="请选择" @focus="getEmployeeSimple" @blur="checkManager">
+        <el-select v-model="formData.manager" style="width:80%" placeholder="请选择" @focus="getEmployeeSimple"
+                   @blur="checkManager"
+        >
           <el-option v-for="item in employeeList" :key="item.id" :value="item.username" :label="item.username"/>
         </el-select>
       </el-form-item>
@@ -30,7 +32,7 @@
   </el-dialog>
 </template>
 <script>
-import { getDepartments,addDepartment  } from '@/api/departments'
+import { getDepartments, addDepartment, getDepartmentDetail } from '@/api/departments'
 import { getEmployeeSimple } from '@/api/employees'
 
 export default {
@@ -128,6 +130,9 @@ export default {
       // 清理校验结果
       this.$refs.addDept.resetFields()
       this.$emit('update:showDialog', false)
+    },
+    async getDepartmentDetail(id) {
+      this.formData = await getDepartmentDetail(id)
     }
   }
 }

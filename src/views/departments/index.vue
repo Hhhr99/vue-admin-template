@@ -14,12 +14,13 @@
           <template #default="scoped">
             <!--            <TreeTools :tree-node="scoped.data" :is-root="false"/>-->
             <TreeTools :tree-node="scoped.data" :is-root="false" @addDepartment="addDepartment"
+                       @editDepartment="editDepartment"
                        @delDepartment="getDepartments"
             />
           </template>
         </el-tree>
       </el-card>
-      <AddDept :tree-node="treeNode" :show-dialog.sync="showDialog" @addDepartment="getDepartments" />
+      <AddDept ref="addDept" :tree-node="treeNode" :show-dialog.sync="showDialog" @addDepartment="getDepartments"/>
     </div>
   </div>
 </template>
@@ -59,6 +60,11 @@ export default {
     addDepartment(treeNode) {
       this.showDialog = true
       this.treeNode = treeNode
+    },
+    editDepartment(treeNode) {
+      this.showDialog = true
+      this.treeNode = treeNode
+      this.$refs.addDept.getDepartmentDetail(treeNode.id)
     }
   }
 }

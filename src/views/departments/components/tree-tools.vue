@@ -17,7 +17,7 @@
             <!-- 下拉菜单 -->
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item @click.native="addDepartment">添加子部门</el-dropdown-item>
-              <el-dropdown-item v-if="!isRoot">修改部门</el-dropdown-item>
+              <el-dropdown-item v-if="!isRoot" @click.native="editDepartment">修改部门</el-dropdown-item>
               <!--              <el-dropdown-item v-if="!isRoot">删除部门</el-dropdown-item>-->
               <el-dropdown-item v-if="!isRoot" @click.native="delDepartment">删除部门</el-dropdown-item>
             </el-dropdown-menu>
@@ -61,6 +61,9 @@ export default {
     addDepartment() {
       console.log(this.treeNode)
       this.$emit('addDepartment', this.treeNode)
+    },
+    editDepartment() {
+      this.$emit('editDepartment', this.treeNode)
     }
   }
 }
