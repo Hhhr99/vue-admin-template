@@ -15,10 +15,10 @@
               </el-button>
             </el-row>
             <!-- 表格 -->
-            <el-table border="">
-              <el-table-column label="序号" width="120"/>
-              <el-table-column label="角色名称" width="240"/>
-              <el-table-column label="描述"/>
+            <el-table border="" :data="list">
+              <el-table-column label="序号" type="index" width="120" />
+              <el-table-column label="角色名称" width="240" prop="name" />
+              <el-table-column label="描述" prop="description" />
               <el-table-column label="操作">
                 <el-button size="small" type="success">分配权限</el-button>
                 <el-button size="small" type="primary">编辑</el-button>
@@ -28,7 +28,7 @@
             <!-- 分页组件 -->
             <el-row type="flex" justify="center" align="middle" style="height: 60px">
               <!-- 分页组件 -->
-              <el-pagination layout="prev,pager,next"/>
+              <el-pagination layout="prev,pager,next" :total="page.total" :page-size="page.pagesize" />
             </el-row>
           </el-tab-pane>
           <el-tab-pane label="公司信息">
