@@ -61,7 +61,7 @@
         </el-tabs>
       </el-card>
       <el-dialog :title="titleText" :visible="showDialog" @close="btnCancel">
-        <el-form ref="roleForm" :model="roleForm" :rules="rules" label-width="120px">
+        <el-form v-if="showDialog" :model="roleForm" :rules="rules" label-width="120px">
           <el-form-item label="角色名称" prop="name">
             <el-input v-model="roleForm.name"/>
           </el-form-item>
@@ -143,6 +143,9 @@ export default {
       await this.$confirm('是否确认删除该角色?')
       // 发请求
       await delRole(id)
+      if (this.list.length === 1 && this.page.page > 1) {
+        this.page.page--
+      }
       // 提醒
       this.$message.success('删除成功')
       // 重新加载数据
