@@ -118,7 +118,10 @@ export default {
       // 3. 提醒用户
       this.$message.success('操作成功')
       // 4. 弹窗关闭
+      // this.showDialog = false
+      this.$emit('update:showDialog', false)
       // 5. 加载新数据
+      this.$emit('addDepartment')
     }
   }
 }
