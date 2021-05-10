@@ -28,7 +28,7 @@
             <!-- 分页组件 -->
             <el-row type="flex" justify="center" align="middle" style="height: 60px">
               <!-- 分页组件 -->
-              <el-pagination layout="prev,pager,next" :total="page.total" :page-size="page.pagesize" />
+              <el-pagination layout="prev,pager,next" :total="page.total" :page-size="page.pagesize" @current-change="currentChange"/>
             </el-row>
           </el-tab-pane>
           <el-tab-pane label="公司信息">
@@ -93,6 +93,10 @@ export default {
       const { rows, total } = await getRoleList(this.page)
       this.list = rows
       this.page.total = total
+    },
+    currentChange(newPage) {
+      this.page.page = newPage
+      this.getRoleList()
     }
   }
 }
