@@ -6,7 +6,8 @@
         <TreeTools :tree-node="company" :is-root="true" @addDepartment="addDepartment"/>
         <hr>
         <!-- 以上是头部的公司信息, 下面是树形的部门结构 -->
-        <el-tree :data="departs" :props="{label: 'name'}" :default-expand-all="true">
+        <el-tree :expand-on-click-node="false" :data="departs" :props="{label: 'name'}" :default-expand-all="true">
+
           <!-- 作用域插槽需要指定两个东西
           1. 插槽名字
           2. 接收数据的形参 -->

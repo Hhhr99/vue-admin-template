@@ -3,15 +3,15 @@
   <el-dialog title="新增部门" :visible="showDialog">
     <!-- 表单组件  el-form   label-width设置label的宽度   -->
     <!-- 匿名插槽 -->
-    <el-form label-width="120px" :model="formData" :rules="rules">
+    <el-form ref="addDept" label-width="120px" :model="formData" :rules="rules">
       <el-form-item label="部门名称" prop="name">
         <el-input v-model="formData.name" style="width:80%" placeholder="1-50个字符"/>
       </el-form-item>
       <el-form-item label="部门编码" prop="code">
         <el-input v-model="formData.code" style="width:80%" placeholder="1-50个字符"/>
       </el-form-item>
-      <el-form-item label="部门负责人" prop="manager">
-        <el-select v-model="formData.manager" style="width:80%" placeholder="请选择" @focus="getEmployeeSimple">
+      <el-form-item ref="addDept" label="部门负责人" prop="manager">
+        <el-select v-model="formData.manager" style="width:80%" placeholder="请选择" @focus="getEmployeeSimple" @blur="checkManager">
           <el-option v-for="item in employeeList" :key="item.id" :value="item.username" :label="item.username"/>
         </el-select>
       </el-form-item>
@@ -103,6 +103,12 @@ export default {
     async getEmployeeSimple() {
       this.employeeList = await getEmployeeSimple()
       console.log(this.employeeList)
+    },
+    checkManager() {
+      // 这是失去焦点的部门负责人, 需要手动触发校验
+      setTimeout(() => {
+        this.$refs.addDept.validateField('manager')
+      }, 200)
     }
   }
 }
