@@ -27,7 +27,7 @@
           </el-table-column>
           <el-table-column label="姓名" sortable="" prop="username"/>
           <el-table-column label="工号" sortable="" prop="workNumber"/>
-          <el-table-column label="聘用形式" sortable="" prop="formOfEmployment"/>
+          <el-table-column label="聘用形式" sortable="" prop="formOfEmployment" :formatter="formatFormEmployment"/>
           <el-table-column label="部门" sortable="" prop="departmentName"/>
           <el-table-column label="入职时间" sortable="" prop="timeOfEntry"/>
           <el-table-column label="账户状态" sortable="" prop="enableState"/>
@@ -75,12 +75,18 @@ export default {
       const { rows, total } = await getEmployeeList(this.page)
       this.page.total = total
       this.list = rows
+      // console.log(this.page.total)
+      // console.log(this.page.page)
+      // console.log(this.list)
     },
     currentChange(newPage) {
       // 1. 修改翻页配置
       this.page.page = newPage
       // 2. 发个请求
       this.getEmployeeList()
+    },
+    formatFormEmployment(row, column, cellValue) {
+      return cellValue === 1 ? '正式员工' : '临时工'
     }
   }
 }
