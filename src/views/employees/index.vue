@@ -10,12 +10,9 @@
 </template>
 
 <script>
-import PageTools from '@/components/PageTools'
 
 export default {
-  components: {
-    PageTools
-  }
+
 }
 </script>
 

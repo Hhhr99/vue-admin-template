@@ -27,6 +27,10 @@ import { imgerr } from '@/directive'
 
 Vue.directive('imgerr', imgerr)
 
+// 全局注册组件方便四处使用
+import PageTools from '@/components/PageTools'
+Vue.component('PageTools', PageTools)
+
 new Vue({
   el: '#app',
   router,
