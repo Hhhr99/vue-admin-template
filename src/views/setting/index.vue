@@ -11,13 +11,14 @@
                 icon="el-icon-plus"
                 size="small"
                 type="primary"
-              >新增角色</el-button>
+              >新增角色
+              </el-button>
             </el-row>
             <!-- 表格 -->
             <el-table border="">
-              <el-table-column label="序号" width="120" />
-              <el-table-column label="角色名称" width="240" />
-              <el-table-column label="描述" />
+              <el-table-column label="序号" width="120"/>
+              <el-table-column label="角色名称" width="240"/>
+              <el-table-column label="描述"/>
               <el-table-column label="操作">
                 <el-button size="small" type="success">分配权限</el-button>
                 <el-button size="small" type="primary">编辑</el-button>
@@ -27,7 +28,7 @@
             <!-- 分页组件 -->
             <el-row type="flex" justify="center" align="middle" style="height: 60px">
               <!-- 分页组件 -->
-              <el-pagination layout="prev,pager,next" />
+              <el-pagination layout="prev,pager,next"/>
             </el-row>
           </el-tab-pane>
           <el-tab-pane label="公司信息">
@@ -39,16 +40,16 @@
             />
             <el-form label-width="120px" style="margin-top:50px">
               <el-form-item label="公司名称">
-                <el-input disabled style="width:400px" />
+                <el-input v-model="formData.name" disabled style="width:400px"/>
               </el-form-item>
               <el-form-item label="公司地址">
-                <el-input disabled style="width:400px" />
+                <el-input v-model="formData.companyAddress" disabled style="width:400px"/>
               </el-form-item>
               <el-form-item label="邮箱">
-                <el-input disabled style="width:400px" />
+                <el-input v-model="formData.mailbox" disabled style="width:400px"/>
               </el-form-item>
               <el-form-item label="备注">
-                <el-input type="textarea" :rows="3" disabled style="width:400px" />
+                <el-input v-model="formData.remarks" type="textarea" :rows="3" disabled style="width:400px"/>
               </el-form-item>
             </el-form>
           </el-tab-pane>
@@ -59,8 +60,27 @@
 </template>
 
 <script>
-export default {
+import { getCompanyInfo } from '@/api/setting'
 
+export default {
+  data() {
+    return {
+      formData: {
+        name: '',
+        companyAddress: '',
+        mailbox: '',
+        remarks: ''
+      }
+    }
+  },
+  created() {
+    this.getCompanyInfo()
+  },
+  methods: {
+    async getCompanyInfo() {
+      this.formData = await getCompanyInfo(this.$store.state.user.userInfo.companyId)
+    }
+  }
 }
 </script>
 
