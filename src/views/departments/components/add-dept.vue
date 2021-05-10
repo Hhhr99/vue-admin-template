@@ -53,23 +53,48 @@ export default {
       // 1. 所有部门列表
       const { depts } = await getDepartments()
       // 2. 当前被点击座位父部门的那个id
-      const isRepeat = depts
-        // 找到同一部门下的子部门 得到一个数组
-        .filter(item => item.pid === this.treeNode.id)
-        // 找到是否存在跟当前用户输入相同的名称 得到布尔值
-        .some(item => item.name === value)
-      if (isRepeat) {
-        callback(new Error('同部门下不能重名'))
+      // const isRepeat = depts
+      //   // 找到同一部门下的子部门 得到一个数组
+      //   .filter(item => item.pid === this.treeNode.id)
+      //   // 找到是否存在跟当前用户输入相同的名称 得到布尔值
+      //   .some(item => item.name === value)
+      // if (isRepeat) {
+      //   callback(new Error('同部门下不能重名'))
+      // } else {
+      //   callback()
+      // }
+      let isRepeat = false
+      if (this.formData.id) {
+        // 编辑
+        isRepeat = depts
+          // 当前的 treeNode.pid 才是父部门
+          .filter(item => item.pid === this.treeNode.pid && item.id !== this.treeNode.id)
+          // 找一找是否存在跟当前用户输入值相同的名称 得到布尔值
+          .some(item => item.name === value)
       } else {
-        callback()
+        // 新增
+        isRepeat = depts
+          // 找到同一父部门下的子部门 得到一个数组
+          .filter(item => item.pid === this.treeNode.id)
+          // 找一找是否存在跟当前用户输入值相同的名称 得到布尔值
+          .some(item => item.name === value)
       }
+      isRepeat ? callback(new Error('同部门下不能重名')) : callback()
     }
 
     const checkRepeatCode = async(rule, value, callbakc) => {
       // 1. 全部部门列表
       const { depts } = await getDepartments()
       // 2. 当前用户输入的value
-      const isRepeat = depts.some(item => item.name === value)
+      // const isRepeat = depts.some(item => item.name === value)
+      let isRepeat = false
+      if (this.formData.id) {
+        // 编辑 的时候必须把自己排除在外
+        isRepeat = depts.some(item => item.code === value && item.id !== this.treeNode.id)
+      } else {
+        // 新增
+        isRepeat = depts.some(item => item.code === value)
+      }
       isRepeat ? callbakc(new Error('部门代码不能重复')) : callbakc()
     }
     return {
