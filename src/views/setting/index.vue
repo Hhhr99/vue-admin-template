@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { getCompanyInfo, getRoleList, delRole, getRoleDetail } from '@/api/setting'
+import { getCompanyInfo, getRoleList, delRole, getRoleDetail, updateRole } from '@/api/setting'
 
 export default {
   data() {
@@ -156,9 +156,33 @@ export default {
     }
 
   },
-  btnOK() {
+  async btnOK() {
+    // 验证
+    await this.$refs.roleForm.validate()
+    // 发送请求
+    if (this.roleForm.id) {
+      // 编辑
+      await updateRole(this.roleForm)
+    } else {
+      // 新增
+    }
+    // 提示用户
+    this.$message.success('操作成功')
+    // 关闭弹窗
+    this.showDialog = false
+    // 重新加载数据
+    this.getRoleList()
   },
   btnCancel() {
+    // 清理表单
+    this.roleForm = {
+      name: '',
+      description: ''
+    }
+    // 清理验证
+    this.$refs.roleForm.resetFields()
+    // 关闭弹窗
+    this.showDialog = false
   }
 }
 </script>
