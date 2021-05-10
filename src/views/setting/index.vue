@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { getCompanyInfo, getRoleList, delRole, getRoleDetail, updateRole } from '@/api/setting'
+import { getCompanyInfo, getRoleList, delRole, getRoleDetail, updateRole, addRole } from '@/api/setting'
 
 export default {
   data() {
@@ -165,6 +165,7 @@ export default {
       await updateRole(this.roleForm)
     } else {
       // 新增
+      await addRole(this.roleForm)
     }
     // 提示用户
     this.$message.success('操作成功')
