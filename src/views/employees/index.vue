@@ -29,7 +29,11 @@
           <el-table-column label="工号" sortable="" prop="workNumber"/>
           <el-table-column label="聘用形式" sortable="" prop="formOfEmployment" :formatter="formatFormEmployment"/>
           <el-table-column label="部门" sortable="" prop="departmentName"/>
-          <el-table-column label="入职时间" sortable="" prop="timeOfEntry"/>
+          <el-table-column label="入职时间" sortable="">
+            <template slot-scope="scope">
+              {{ scope.row.timeOfEntry | formateTime }}
+            </template>
+          </el-table-column>
           <el-table-column label="账户状态" sortable="" prop="enableState"/>
           <el-table-column label="操作" sortable="" fixed="right" width="280">
             <template>
@@ -58,6 +62,11 @@ import { getEmployeeList } from '@/api/employees'
 // 引入枚举数据, 方便聘用形式的格式化
 import employmentEnum from '@/api/constant/employees'
 export default {
+  filters: {
+    formateTime(valOrigin) {
+      return valOrigin.split('T')[0]
+    }
+  },
   data() {
     return {
       list: [],
