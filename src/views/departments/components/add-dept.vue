@@ -134,6 +134,13 @@ export default {
     },
     btnCancel() {
       // 先清理表单绑定的数据
+      // 为了照顾编辑的情况, 每次关闭强制将表单恢复到原样
+      this.formData = {
+        code: '',
+        introduce: '',
+        manager: '',
+        name: ''
+      }
       // 清理校验结果
       this.$refs.addDept.resetFields()
       this.$emit('update:showDialog', false)
