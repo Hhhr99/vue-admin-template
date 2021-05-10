@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { getCompanyInfo } from '@/api/setting'
+import { getCompanyInfo, getRoleList } from '@/api/setting'
 
 export default {
   data() {
@@ -70,15 +70,29 @@ export default {
         companyAddress: '',
         mailbox: '',
         remarks: ''
-      }
+      },
+      // 翻页设定对象
+      page: {
+        page: 1,
+        pagesize: 2,
+        total: 0
+      },
+      // 角色列表数组
+      list: []
     }
   },
   created() {
     this.getCompanyInfo()
+    this.getRoleList()
   },
   methods: {
     async getCompanyInfo() {
       this.formData = await getCompanyInfo(this.$store.state.user.userInfo.companyId)
+    },
+    async getRoleList() {
+      const { rows, total } = await getRoleList(this.page)
+      this.list = rows
+      this.page.total = total
     }
   }
 }

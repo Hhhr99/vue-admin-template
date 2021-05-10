@@ -5,3 +5,10 @@ export function getCompanyInfo(companyId) {
     url: '/company/' + companyId
   })
 }
+
+export function getRoleList(params) {
+  return request({
+    url: '/sys/role',
+    params
+  })
+}
