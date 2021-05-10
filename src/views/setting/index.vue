@@ -140,16 +140,31 @@ export default {
     },
     async delRole(id) {
       // 二次校验
-      await this.$confirm('是否确认删除该角色?')
-      // 发请求
-      await delRole(id)
-      if (this.list.length === 1 && this.page.page > 1) {
-        this.page.page--
+      // await this.$confirm('是否确认删除该角色?')
+      // // 发请求
+      // await delRole(id)
+      // if (this.list.length === 1 && this.page.page > 1) {
+      //   this.page.page--
+      // }
+      // // 提醒
+      // this.$message.success('删除成功')
+      // // 重新加载数据
+      // this.getRoleList()
+      try {
+        // 二次校验
+        await this.$confirm('是否确认删除该角色?')
+        // 发请求
+        await delRole(id)
+        if (this.list.length === 1 && this.page.page > 1) {
+          this.page.page--
+        }
+        // 提醒
+        this.$message.success('删除成功')
+        // 重新加载数据
+        this.getRoleList()
+      } catch (error) {
+        console.log(error)
       }
-      // 提醒
-      this.$message.success('删除成功')
-      // 重新加载数据
-      this.getRoleList()
     },
     async editRole(id) {
       // 1. 回显数据
