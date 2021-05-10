@@ -1,6 +1,6 @@
 <template>
   <!-- 新增部门的弹层 -->
-  <el-dialog title="新增部门" :visible="showDialog" @close="btnCancel">
+  <el-dialog :title="formData.id?'编辑部门':'新增部门'" :visible="showDialog" @close="btnCancel">
     <!-- 表单组件  el-form   label-width设置label的宽度   -->
     <!-- 匿名插槽 -->
     <el-form ref="addDept" label-width="120px" :model="formData" :rules="rules">
@@ -32,7 +32,7 @@
   </el-dialog>
 </template>
 <script>
-import { getDepartments, addDepartment, getDepartmentDetail } from '@/api/departments'
+import { getDepartments, addDepartment, getDepartmentDetail, editDepartment } from '@/api/departments'
 import { getEmployeeSimple } from '@/api/employees'
 
 export default {
@@ -116,7 +116,14 @@ export default {
       // 1. 表单校验
       await this.$refs.addDept.validate()
       // 2. 发请求
-      await addDepartment({ ...this.formData, pid: this.treeNode.id })
+      // await addDepartment({ ...this.formData, pid: this.treeNode.id })
+      // 如果是编辑请求,api 不相同
+      if (this.formData.id) {
+        // 编辑
+        await editDepartment(this.formData)
+      } else {
+        await addDepartment({ ...this.formData, pid: this.treeNode.id })
+      }
       // 3. 提醒用户
       this.$message.success('操作成功')
       // 4. 弹窗关闭
