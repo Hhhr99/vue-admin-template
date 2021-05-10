@@ -60,7 +60,7 @@
           </el-tab-pane>
         </el-tabs>
       </el-card>
-      <el-dialog title="编辑弹层" :visible="showDialog" @close="btnCancel">
+      <el-dialog :title="titleText" :visible="showDialog" @close="btnCancel">
         <el-form ref="roleForm" :model="roleForm" :rules="rules" label-width="120px">
           <el-form-item label="角色名称" prop="name">
             <el-input v-model="roleForm.name"/>
@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { getCompanyInfo, getRoleList, delRole } from '@/api/setting'
+import { getCompanyInfo, getRoleList, delRole, getRoleDetail } from '@/api/setting'
 
 export default {
   data() {
@@ -116,6 +116,11 @@ export default {
       }
     }
   },
+  computed: {
+    titleText() {
+      return this.roleForm.id ? '编辑角色' : '新增角色'
+    }
+  },
   created() {
     this.getCompanyInfo()
     this.getRoleList()
@@ -143,17 +148,18 @@ export default {
       // 重新加载数据
       this.getRoleList()
     },
-    editRole(id) {
+    async editRole(id) {
       // 1. 回显数据
+      this.roleForm = await getRoleDetail(id)
       // 2. 弹窗
       this.showDialog = true
-    },
-    btnOK() {
-    },
-    btnCancel() {
     }
+
+  },
+  btnOK() {
+  },
+  btnCancel() {
   }
-}
 }
 </script>
 
