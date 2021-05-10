@@ -5,9 +5,10 @@
 </template>
 
 <script>
+import { importEmployee } from '@/api/employees'
 export default {
   methods: {
-    upload(data) {
+    async upload(data) {
       // 这里再excel数据传入成功后执行
       // 准备字典
       const dict = {
@@ -24,6 +25,12 @@ export default {
         return this.translate(user, dict)
       })
       console.log(userData)
+
+      await importEmployee(userData)
+
+      this.$message.success('上传成功')
+
+      this.$router.back()
     },
     translate(user, dict) {
       const newUser = {}
