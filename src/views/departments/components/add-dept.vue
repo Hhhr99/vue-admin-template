@@ -1,6 +1,6 @@
 <template>
   <!-- 新增部门的弹层 -->
-  <el-dialog title="新增部门" :visible="showDialog">
+  <el-dialog title="新增部门" :visible="showDialog" @close="btnCancel">
     <!-- 表单组件  el-form   label-width设置label的宽度   -->
     <!-- 匿名插槽 -->
     <el-form ref="addDept" label-width="120px" :model="formData" :rules="rules">
@@ -24,7 +24,7 @@
       <!-- 列被分为24 -->
       <el-col :span="6">
         <el-button type="primary" size="small" @click="btnOK">确定</el-button>
-        <el-button size="small">取消</el-button>
+        <el-button size="small" @click="btnCancel">取消</el-button>
       </el-col>
     </el-row>
   </el-dialog>
@@ -122,6 +122,12 @@ export default {
       this.$emit('update:showDialog', false)
       // 5. 加载新数据
       this.$emit('addDepartment')
+    },
+    btnCancel() {
+      // 先清理表单绑定的数据
+      // 清理校验结果
+      this.$refs.addDept.resetFields()
+      this.$emit('update:showDialog', false)
     }
   }
 }
