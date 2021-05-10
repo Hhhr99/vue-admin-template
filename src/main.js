@@ -40,8 +40,12 @@ Vue.directive('imgerr', imgerr)
 //   obj.install(Vue)
 // }
 import myComponents from '@/components'
-
 Vue.use(myComponents)
+
+// 过滤器的注册
+Vue.filter('formateTime', function(oldVal) {
+  return oldVal.split('T')[0]
+})
 
 new Vue({
   el: '#app',

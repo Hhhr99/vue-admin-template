@@ -62,11 +62,6 @@ import { getEmployeeList } from '@/api/employees'
 // 引入枚举数据, 方便聘用形式的格式化
 import employmentEnum from '@/api/constant/employees'
 export default {
-  filters: {
-    formateTime(valOrigin) {
-      return valOrigin.split('T')[0]
-    }
-  },
   data() {
     return {
       list: [],
