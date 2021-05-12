@@ -44,7 +44,8 @@ module.exports = {
       // 这里以 key: value 的形式指定
       // 需要转向的 url 类型: 转向的目的地
       '/api': {
-        target: 'http://ihrm-java.itheima.net/',
+        // target: 'http://ihrm-java.itheima.net/',
+        target: 'http://localhost:3000',
         changeOrigin: true
       }
     }

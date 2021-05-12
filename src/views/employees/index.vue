@@ -9,7 +9,7 @@
 
         <template slot="after">
           <el-button size="small" type="warning" @click="$router.push('/import')">导入</el-button>
-          <el-button size="small" type="danger">导出</el-button>
+          <el-button size="small" type="danger" @click="exportEmployees">导出</el-button>
           <el-button size="small" type="primary">新增员工</el-button>
         </template>
       </page-tools>
@@ -67,6 +67,9 @@
 import { getEmployeeList } from '@/api/employees'
 // 引入枚举数据, 方便聘用形式的格式化
 import employmentEnum from '@/api/constant/employees'
+// 对于一个不常用的库, 每次都默认引入, 技术上没问题
+// 可以进行优化
+// import {export_json_to_excel} from '@/vendor/Export2Excel'
 export default {
   data() {
     return {
@@ -82,6 +85,19 @@ export default {
     this.getEmployeeList()
   },
   methods: {
+    async exportEmployees() {
+      // 这里是按钮被点击, 可以就在这里单独引入需要的库
+      const { export_json_to_excel } = await import('@/vendor/Export2Excel')
+      console.log(export_json_to_excel)
+      export_json_to_excel({
+        header: ['姓名', '年龄', '地址'],
+        data: [
+          ['小明', 888, '珠吉路58号'],
+          ['小红', 8, '珠吉路59号'],
+          ['小刚', 12, '珠吉路60号']
+        ]
+      })
+    },
     async getEmployeeList() {
       const { rows, total } = await getEmployeeList(this.page)
       this.page.total = total
