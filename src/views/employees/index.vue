@@ -89,14 +89,17 @@ export default {
       // 这里是按钮被点击, 可以就在这里单独引入需要的库
       const { export_json_to_excel } = await import('@/vendor/Export2Excel')
       console.log(export_json_to_excel)
-      export_json_to_excel({
-        header: ['姓名', '年龄', '地址'],
-        data: [
-          ['小明', 888, '珠吉路58号'],
-          ['小红', 8, '珠吉路59号'],
-          ['小刚', 12, '珠吉路60号']
-        ]
-      })
+      // 加载所有员工
+      const { rows } = await getEmployeeList({ page: 1, size: this.page.total })
+      console.log(rows)
+      // export_json_to_excel({
+      //   header: ['姓名', '年龄', '地址'],
+      //   data: [
+      //     ['小明', 888, '珠吉路58号'],
+      //     ['小红', 8, '珠吉路59号'],
+      //     ['小刚', 12, '珠吉路60号']
+      //   ]
+      // })
     },
     async getEmployeeList() {
       const { rows, total } = await getEmployeeList(this.page)
