@@ -174,8 +174,8 @@ export default {
       this.getEmployeeList()
     },
     formatFormEmployment(row, column, cellValue) {
-      const obj = employmentEnum.hireType.find(item => item.id === cellValue)
-      return obj ? obj.value : '未知'
+      const obj = employmentEnum.hireType.find(item => item.id === Number(cellValue))
+      return obj ? obj.value : '未知!!!'
     }
   }
 }

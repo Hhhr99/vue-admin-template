@@ -32,3 +32,12 @@ export function delEmployee(id) {
   })
 }
 
+// 新增员工接口
+export function addEmployee(data) {
+  return request({
+    url: '/sys/user',
+    method: 'post',
+    data
+  })
+}
+

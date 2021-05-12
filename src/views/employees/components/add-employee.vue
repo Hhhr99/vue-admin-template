@@ -1,7 +1,7 @@
 <template>
   <el-dialog title="新增员工" :visible="showDialog">
     <!-- 表单 -->
-    <el-form label-width="120px" :model="formData" :rules="rules">
+    <el-form ref="addEmployee" label-width="120px" :model="formData" :rules="rules">
       <el-form-item label="姓名" prop="username">
         <el-input v-model="formData.username" style="width:80%" placeholder="请输入姓名"/>
       </el-form-item>
@@ -13,16 +13,31 @@
       </el-form-item>
       <el-form-item label="聘用形式" prop="formOfEmployment">
         <el-select v-model="formData.formOfEmployment" style="width:80%" placeholder="请选择">
-          <el-option v-for="item in employeesEnum.hireType" :key="item.id" :label="item.value" :value="item.id"/>
+          <el-option
+            v-for="item in employeesEnum.hireType"
+            :key="item.id"
+            :label="item.value"
+            :value="item.id"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="工号" prop="workNumber">
         <el-input v-model="formData.workNumber" style="width:80%" placeholder="请输入工号"/>
       </el-form-item>
       <el-form-item label="部门" prop="departmentName">
-        <el-input :value="formData.departmentName" style="width:80%" placeholder="请选择部门" @focus="getDepartments"/>
-        <el-tree v-if="showTree" class="deptsTree" :data="treeData" :props="{label: 'name'}" :default-expand-all="true"
-                 @node-click="selectDepts"
+        <el-input
+          :value="formData.departmentName"
+          style="width:80%"
+          placeholder="请选择部门"
+          @focus="getDepartments"
+        />
+        <el-tree
+          v-if="showTree"
+          class="deptsTree"
+          :data="treeData"
+          :props="{label: 'name'}"
+          :default-expand-all="true"
+          @node-click="selectDepts"
         />
       </el-form-item>
       <el-form-item label="转正时间">
@@ -34,7 +49,7 @@
       <el-row type="flex" justify="center">
         <el-col :span="6">
           <el-button size="small">取消</el-button>
-          <el-button type="primary" size="small">确定</el-button>
+          <el-button type="primary" size="small" @click="btnOK">确定</el-button>
         </el-col>
       </el-row>
     </template>
@@ -45,6 +60,7 @@
 import { getDepartments } from '@/api/departments'
 import { listToTreeData } from '@/utils'
 import employeesEnum from '@/api/constant/employees'
+import { addEmployee } from '@/api/employees'
 
 export default {
   props: {
@@ -92,6 +108,21 @@ export default {
       console.log(data)
       this.formData.departmentName = data.name
       this.showTree = false
+    },
+    async btnOK() {
+      // 校验
+      await this.$refs.addEmployee.validate()
+      // 发请求
+      await addEmployee(this.formData)
+      // 提示用户
+      this.$message.success('添加成功')
+      // 关闭弹窗
+      // 更新页面
+      // 以上两个其实是在子组件想要控制父组件的数据火种调用父组件的函数
+      // 标准的做法 $emit 进行子传父的传递
+      // 还可以通过 this.$parent 直接去的父组件的实例对象
+      this.$parent.showDialog = false
+      this.$parent.getEmployeeList()
     }
   }
 }
