@@ -4,7 +4,7 @@
       <page-tools :show-before="true">
 
         <template slot="before">
-          <span>{{ page.total }}</span>
+          <span>共{{ page.total }}条记录</span>
         </template>
 
         <template slot="after">
@@ -42,13 +42,13 @@
             </template>
           </el-table-column>
           <el-table-column label="操作" sortable="" fixed="right" width="280">
-            <template>
+            <template slot-scope="{row}">
               <el-button type="text" size="small">查看</el-button>
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
               <el-button type="text" size="small">角色</el-button>
-              <el-button type="text" size="small">删除</el-button>
+              <el-button type="text" size="small" @click="deleteEmployee(row.id)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -67,6 +67,7 @@
 import { getEmployeeList } from '@/api/employees'
 // 引入枚举数据, 方便聘用形式的格式化
 import employmentEnum from '@/api/constant/employees'
+import { delEmployee } from '@/api/employees'
 // 对于一个不常用的库, 每次都默认引入, 技术上没问题
 // 可以进行优化
 // import {export_json_to_excel} from '@/vendor/Export2Excel'
@@ -85,6 +86,16 @@ export default {
     this.getEmployeeList()
   },
   methods: {
+    async deleteEmployee(id) {
+      try {
+        await this.$confirm('您确定删除该员工吗')
+        await delEmployee(id)
+        this.getEmployeeList()
+        this.$message.success('删除员工成功')
+      } catch (error) {
+        console.log(error)
+      }
+    },
     async exportEmployees() {
       // 这里是按钮被点击, 可以就在这里单独引入需要的库
       const { export_json_to_excel } = await import('@/vendor/Export2Excel')
