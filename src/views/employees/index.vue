@@ -10,7 +10,7 @@
         <template slot="after">
           <el-button size="small" type="warning" @click="$router.push('/import')">导入</el-button>
           <el-button size="small" type="danger" @click="exportEmployees">导出</el-button>
-          <el-button size="small" type="primary">新增员工</el-button>
+          <el-button size="small" type="primary" @click="showDialog = true">新增员工</el-button>
         </template>
       </page-tools>
       <!-- 放置表格和分页 -->
@@ -59,6 +59,7 @@
           />
         </el-row>
       </el-card>
+      <AddEmployee :show-dialog="showDialog"/>
     </div>
   </div>
 </template>
@@ -72,7 +73,12 @@ import { delEmployee } from '@/api/employees'
 // 可以进行优化
 // import {export_json_to_excel} from '@/vendor/Export2Excel'
 import { formatDate } from '@/filters'
+import AddEmployee from './components/add-employee'
+
 export default {
+  components: {
+    AddEmployee
+  },
   data() {
     return {
       list: [],
@@ -80,7 +86,8 @@ export default {
         page: 1,
         size: 5,
         total: 0
-      }
+      },
+      showDialog: false
     }
   },
   created() {
