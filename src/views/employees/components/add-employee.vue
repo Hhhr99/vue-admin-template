@@ -18,8 +18,10 @@
         <el-input v-model="formData.workNumber" style="width:80%" placeholder="请输入工号"/>
       </el-form-item>
       <el-form-item label="部门" prop="departmentName">
-        <el-input v-model="formData.departmentName" style="width:80%" placeholder="请选择部门" @focus="getDepartments" />
-        <el-tree v-if="showTree" class="deptsTree" :data="treeData" :props="{label: 'name'}" :default-expand-all="true" />
+        <el-input :value="formData.departmentName" style="width:80%" placeholder="请选择部门" @focus="getDepartments"/>
+        <el-tree v-if="showTree" class="deptsTree" :data="treeData" :props="{label: 'name'}" :default-expand-all="true"
+                 @node-click="selectDepts"
+        />
       </el-form-item>
       <el-form-item label="转正时间">
         <el-date-picker v-model="formData.correctionTime" style="width:80%" placeholder="请选择转正时间"/>
@@ -81,6 +83,11 @@ export default {
       const { depts } = await getDepartments()
       this.treeData = listToTreeData(depts, '')
       this.showTree = true
+    },
+    selectDepts(data) {
+      console.log(data)
+      this.formData.departmentName = data.name
+      this.showTree = false
     }
   }
 }
