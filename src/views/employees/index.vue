@@ -71,6 +71,7 @@ import { delEmployee } from '@/api/employees'
 // 对于一个不常用的库, 每次都默认引入, 技术上没问题
 // 可以进行优化
 // import {export_json_to_excel} from '@/vendor/Export2Excel'
+import { formatDate } from '@/filters'
 export default {
   data() {
     return {
@@ -139,7 +140,15 @@ export default {
       for (const key in dict) {
         const enKey = dict[key]
         const value = user[enKey]
-        newUser.push(value)
+        // newUser.push(value)
+        if (enKey === 'timeOfEntry' || enKey === 'correctionTime') {
+          newUser.push(new Date(formatDate(value)))
+        } else if (enKey === 'formOfEmployment') {
+          const obj = employmentEnum.hireType.find(item => item.id === value)
+          newUser.push(obj ? obj.value : '未知')
+        } else {
+          newUser.push(value)
+        }
       }
       return newUser
     },
