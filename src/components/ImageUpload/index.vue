@@ -11,6 +11,7 @@
       list-type="picture-card"
       :file-list="fileList"
       :on-preview="preview"
+      :class="{disable: fileList.length > 0}"
     >
       <i class="el-icon-plus"/>
     </el-upload>
@@ -48,6 +49,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+// /deep/ .disable {
+::v-deep .disable {
+  .el-upload--picture-card {
+    display: none;
+  }
+}
 </style>
