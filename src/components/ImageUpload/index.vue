@@ -16,6 +16,7 @@
       :on-preview="preview"
       :on-remove="onRemove"
       :on-change="onChange"
+      :http-request="upload"
     >
       <i class="el-icon-plus"/>
     </el-upload>
@@ -61,6 +62,11 @@ export default {
       // 饿了么会给我们回调当前最新的文件数组
       // 用来覆盖 原来的数据即可
       this.fileList = [...fileList]
+    },
+    upload(data) {
+      // 拦截掉默认上传到 action 的动作
+      // 后续应该连接腾讯云进行上传
+      console.log(data)
     }
   }
 }
