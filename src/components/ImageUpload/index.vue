@@ -86,4 +86,8 @@ export default {
     display: none;
   }
 }
+
+::v-deep img {
+  object-fit: cover;
+}
 </style>
