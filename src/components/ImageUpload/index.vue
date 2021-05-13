@@ -3,6 +3,8 @@
     <!--
       action 必填的图片上传地址, 后面要对接腾讯云, 只是放一个 # 敷衍一下
       list-type 决定文件列表的显示方式
+      :class 动态类名可以控制有图片时隐藏上传图标
+
       file-list 是管理上传文件的数组
       on-preview 指定点击放大镜后的处理，有了这个函数放大镜才会出现
      -->
@@ -10,8 +12,10 @@
       action="#"
       list-type="picture-card"
       :file-list="fileList"
-      :on-preview="preview"
       :class="{disable: fileList.length > 0}"
+      :on-preview="preview"
+      :on-remove="onRemove"
+      :on-change="onChange"
     >
       <i class="el-icon-plus"/>
     </el-upload>
@@ -44,6 +48,19 @@ export default {
       this.showDialog = true
       console.log(file)
       this.previewURL = file.url
+    },
+    onRemove(file, fileList) {
+      // 删除图片的钩子
+      // 根据文档有两个参数
+      // 1. 被删除的文件本身
+      // 2. 删除后最新的文件列表
+      this.fileList = [...fileList]
+    },
+    onChange(file, fileList) {
+      // 跟 onRemove 一样
+      // 饿了么会给我们回调当前最新的文件数组
+      // 用来覆盖 原来的数据即可
+      this.fileList = [...fileList]
     }
   }
 }
