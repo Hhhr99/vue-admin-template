@@ -6,7 +6,7 @@
       <el-row class="inline-info">
         <el-col :span="12">
           <el-form-item label="工号">
-            <el-input v-model="userInfo.workNumber" class="inputW" />
+            <el-input v-model="userInfo.workNumber" class="inputW"/>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -24,12 +24,12 @@
       <el-row class="inline-info">
         <el-col :span="12">
           <el-form-item label="姓名">
-            <el-input v-model="userInfo.username" class="inputW" />
+            <el-input v-model="userInfo.username" class="inputW"/>
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="部门">
-            <el-input v-model="userInfo.departmentName" class="inputW" />
+            <el-input v-model="userInfo.departmentName" class="inputW"/>
           </el-form-item>
         </el-col>
       </el-row>
@@ -37,7 +37,7 @@
       <el-row class="inline-info">
         <el-col :span="12">
           <el-form-item label="手机">
-            <el-input v-model="userInfo.mobile" />
+            <el-input v-model="userInfo.mobile"/>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -148,7 +148,7 @@
           />
         </el-form-item>
         <el-form-item label="年龄">
-          <el-input v-model="formData.age" type="number" class="inputW2" />
+          <el-input v-model="formData.age" type="number" class="inputW2"/>
         </el-form-item>
         <el-form-item label="星座">
           <el-select v-model="formData.constellation" class="inputW2">
@@ -171,10 +171,10 @@
           </el-select>
         </el-form-item>
         <el-form-item label="户籍所在地">
-          <el-input v-model="formData.domicile" class="inputW5" />
+          <el-input v-model="formData.domicile" class="inputW5"/>
         </el-form-item>
         <el-form-item label="政治面貌">
-          <el-input v-model="formData.politicalOutlook" class="inputW2" />
+          <el-input v-model="formData.politicalOutlook" class="inputW2"/>
         </el-form-item>
         <el-form-item label="入党时间">
           <el-date-picker
@@ -192,7 +192,7 @@
           />
         </el-form-item>
         <el-form-item label="子女状态">
-          <el-input v-model="formData.stateOfChildren" placeholder="请输入" />
+          <el-input v-model="formData.stateOfChildren" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="子女有无商业险">
           <el-radio-group v-model="formData.doChildrenHaveCommercialInsurance">
@@ -217,7 +217,7 @@
       <div class="block">
         <div class="title">通讯信息</div>
         <el-form-item label="QQ">
-          <el-input v-model="formData.qq" placeholder="请输入" class="inputW" />
+          <el-input v-model="formData.qq" placeholder="请输入" class="inputW"/>
         </el-form-item>
         <el-form-item label="微信">
           <el-input
@@ -227,10 +227,10 @@
           />
         </el-form-item>
         <el-form-item label="现居住地">
-          <el-input v-model="formData.placeOfResidence" placeholder="请输入" />
+          <el-input v-model="formData.placeOfResidence" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="通讯地址">
-          <el-input v-model="formData.postalAddress" placeholder="请输入" />
+          <el-input v-model="formData.postalAddress" placeholder="请输入"/>
         </el-form-item>
         <el-form-item label="联系手机">
           <el-input
@@ -388,6 +388,8 @@
 
 <script>
 import EmployeeEnum from '@/api/constant/employees'
+import { getPersonalDetail, updatePersonal, saveUserDetailById } from '@/api/employees'
+import { getUserDetailById } from '@/api/user'
 
 export default {
   data() {
@@ -459,6 +461,31 @@ export default {
         remarks: '' // 备注
       }
     }
+  },
+  created() {
+    this.getPersonalDetail()
+    this.getUserDetailById()
+  },
+  methods: {
+    // 针对 userInfo 表单(第一个表单)读取修改操作封装
+    async getUserDetailById() {
+      this.userInfo = await getUserDetailById(this.userId)
+    },
+    async saveUser() {
+      //  调用父组件
+      await saveUserDetailById(this.userInfo)
+      this.$message.success('保存成功')
+    },
+
+    // 针对 formData 表单(第二个表单)的读取和修改操作封装
+    async getPersonalDetail() {
+      this.formData = await getPersonalDetail(this.userId) // 获取员工数据
+    },
+    async savePersonal() {
+      await updatePersonal({ ...this.formData, id: this.userId })
+      this.$message.success('保存成功')
+    }
+
   }
 }
 </script>
