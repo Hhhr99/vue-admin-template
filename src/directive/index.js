@@ -7,9 +7,9 @@ export const imgerr = {
     // 1. 当前dom本身
     // 2. 当前指令的配置参数, 允许传值
     // 这是指定使用指令的 dom 插入页面时需要的操作
-    console.log('dom 被插入页面')
-    console.log(dom)
-    console.log(options)
+    // console.log('dom 被插入页面')
+    // console.log(dom)
+    // console.log(options)
     dom.onerror = function() {
       dom.src = options.value
     }

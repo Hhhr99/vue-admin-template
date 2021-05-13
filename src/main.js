@@ -51,9 +51,9 @@ import * as filters from '@/filters'
 // Vue.filter(函数名, 函数体) 就可以注册过滤器
 for (const key in filters) {
   const name = key
-  console.log(name)
+  // console.log(name)
   const fn = filters[key]
-  console.log(fn)
+  // console.log(fn)
   Vue.filter(name, fn)
 }
 
