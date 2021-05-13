@@ -19,8 +19,17 @@
               </el-form-item>
             </el-form>
           </el-tab-pane>
-          <el-tab-pane label="个人详情"/>
-          <el-tab-pane label="岗位信息"/>
+          <el-tab-pane label="个人详情">
+            <!-- <UserInfo /> -->
+            <!-- component 是vue 提供的动态组件标签
+            可以用来显示任意的其他组件
+            只需要给 is 属性赋予一个字符串变量, 变量里面有组件名即可 -->
+            <component :is="componentName"/>
+          </el-tab-pane>
+
+          <el-tab-pane label="岗位信息">
+            <JobInfo/>
+          </el-tab-pane>
         </el-tabs>
       </el-card>
     </div>
@@ -31,9 +40,17 @@
 import { getUserDetailById } from '@/api/user'
 import { saveUserDetailById } from '@/api/employees'
 
+import UserInfo from './components/user-info'
+import JobInfo from './components/job-info'
+
 export default {
+  components: {
+    UserInfo,
+    JobInfo
+  },
   data() {
     return {
+      componentName: 'UserInfo',
       userId: this.$route.params.id,
       formData: {
         username: '',
