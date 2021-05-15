@@ -115,6 +115,10 @@ export default {
         onProgress: (progressData) => {
           console.log(progressData)
           this.percentage = progressData.percent * 100
+          // 通过网上代码分析, 在这里尝试调用饿了么本来的上传进度条
+          // https://blog.csdn.net/bule_chen/article/details/81740106
+          data.file.percent = progressData.percent * 100
+          data.onProgress(data.file)
         }
       }, (err, data) => {
         // 第二个参数是上传完毕的回调
