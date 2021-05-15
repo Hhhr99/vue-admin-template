@@ -90,7 +90,7 @@ export default {
       }
 
       // 2.校验大小
-      const maxSize = 200 * 1024
+      const maxSize = 200 * 1024 * 1024
       if (file.size > maxSize) {
         this.$message.warning('图片大小不能超过' + maxSize / 1024 + 'K')
         return false
@@ -108,7 +108,7 @@ export default {
         // 地区代码
         Region: 'ap-guangzhou',
         // 上传后的文件名
-        Key: data.file.name,
+        Key: data.file.size + data.file.name,
         // 写死的标准储存类型
         StorageClass: 'STANDARD',
         // 文件对象本身
@@ -116,10 +116,17 @@ export default {
         // 进度发生变化时的钩子
         // onProgress: function(progressData) {
         //   console.log(JSON.stringify(progressData))
+        //   console.log(progressData)
         // }
-      }, function(err, data) {
+      }, (err, data) => {
         // 第二个参数是上传完毕的回调
         console.log(err || data)
+        // 腾讯云的上传结果 url 在 data.Location 里面
+        // 手动将这个地址放入 fileList 保存才行
+        if (!err) {
+          this.fileList[0].url = 'http://' + data.Location
+          this.fileList[0].status = 'success'
+        }
       })
     }
   }
