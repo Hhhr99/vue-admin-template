@@ -486,10 +486,15 @@ export default {
       // await saveUserDetailById(this.userInfo)
       // 保存前获取配套的上传组件文件列表
       const fileList = this.$refs.userInfoPhoto.fileList
+      // 处理图片未上传成功的情况
+      if (fileList[0] && fileList[0].status !== 'success') {
+        this.$message.warning('请等待图片上传完毕')
+        return
+      }
       //  调用父组件
       await saveUserDetailById({
         ...this.userInfo,
-        staffPhoto: fileList[0].url
+        staffPhoto: fileList[0] ? fileList[0].url : ''
       })
       this.$message.success('保存成功')
     },
