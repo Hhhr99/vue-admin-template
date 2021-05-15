@@ -101,6 +101,26 @@ export default {
       // 后续应该连接腾讯云进行上传
       console.log('触发上传')
       console.log(data)
+      // 跟腾讯云建立联系上传图片
+      cos.putObject({
+        // 储存桶名称
+        Bucket: 'renzi-1300114582',
+        // 地区代码
+        Region: 'ap-guangzhou',
+        // 上传后的文件名
+        Key: data.file.name,
+        // 写死的标准储存类型
+        StorageClass: 'STANDARD',
+        // 文件对象本身
+        Body: data.file
+        // 进度发生变化时的钩子
+        // onProgress: function(progressData) {
+        //   console.log(JSON.stringify(progressData))
+        // }
+      }, function(err, data) {
+        // 第二个参数是上传完毕的回调
+        console.log(err || data)
+      })
     }
   }
 }
