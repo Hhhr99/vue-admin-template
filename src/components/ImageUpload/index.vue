@@ -23,6 +23,7 @@
       :on-preview="preview"
       :on-remove="onRemove"
       :on-change="onChange"
+      :before-upload="beforeUpload"
       :http-request="upload"
     >
       <i class="el-icon-plus"/>
@@ -70,9 +71,28 @@ export default {
       // 用来覆盖 原来的数据即可
       this.fileList = [...fileList]
     },
+    beforeUpload(file) {
+      console.log('上传前校验')
+      console.log(file)
+
+      // 1.校验类型
+      const acceptType = ['image/jpeg', 'image/png']
+      if (!acceptType.includes(file.type)) {
+        this.$message.warning('只接受 jpeg / png 类型文件')
+        return false
+      }
+
+      // 2.校验大小
+      const maxSize = 200 * 1024
+      if (file.size > maxSize) {
+        this.$message.warning('图片大小不能超过' + maxSize / 1024 + 'K')
+        return false
+      }
+    },
     upload(data) {
       // 拦截掉默认上传到 action 的动作
       // 后续应该连接腾讯云进行上传
+      console.log('触发上传')
       console.log(data)
     }
   }
