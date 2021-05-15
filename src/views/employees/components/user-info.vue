@@ -483,7 +483,14 @@ export default {
     },
     async saveUser() {
       //  调用父组件
-      await saveUserDetailById(this.userInfo)
+      // await saveUserDetailById(this.userInfo)
+      // 保存前获取配套的上传组件文件列表
+      const fileList = this.$refs.userInfoPhoto.fileList
+      //  调用父组件
+      await saveUserDetailById({
+        ...this.userInfo,
+        staffPhoto: fileList[0].url
+      })
       this.$message.success('保存成功')
     },
 
