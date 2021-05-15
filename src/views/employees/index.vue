@@ -27,7 +27,7 @@
           </el-table-column>
           <el-table-column label="头像" sortable="" width="200">
             <template slot-scope="{row}">
-              <img class="avatar" :src="row.staffPhoto" alt="">
+              <img v-imgerr="require('@/assets/common/head.jpg')" class="avatar" :src="row.staffPhoto" alt="">
             </template>
           </el-table-column>
           <el-table-column label="姓名" sortable="" prop="username"/>
