@@ -38,7 +38,14 @@
 </template>
 
 <script>
+// 引入腾讯云工具库
+// 利用创建的访问密钥创建一个实例
+import COS from 'cos-js-sdk-v5'
 
+const cos = new COS({
+  SecretId: 'AKIDSiiSvBDyTjiRt4xax4uTlmVx94uUnpa4',
+  SecretKey: 'EE6pPnzwc2C5h27vRiiRt4zcz4tSkmX1'
+})
 export default {
   data() {
     return {
