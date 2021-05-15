@@ -511,7 +511,19 @@ export default {
       }
     },
     async savePersonal() {
-      await updatePersonal({ ...this.formData, id: this.userId })
+      // await updatePersonal({ ...this.formData, id: this.userId })
+      // 兼顾上传组件
+      const fileList = this.$refs.formDataPhoto.fileList
+      // 如果有图片得保证已经上传完毕
+      if (fileList[0] && fileList[0].status !== 'success') {
+        this.$message.warning('请等待图片上传完毕')
+        return
+      }
+      await updatePersonal({
+        ...this.formData,
+        id: this.userId,
+        staffPhoto: fileList[0] ? fileList[0].url : ''
+      })
       this.$message.success('保存成功')
     }
 
