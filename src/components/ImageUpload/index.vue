@@ -49,12 +49,7 @@ const cos = new COS({
 export default {
   data() {
     return {
-      fileList: [
-        // 写死一张图片作为测试
-        {
-          url: 'https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2189630771,282788356&fm=26&gp=0.jpg'
-        }
-      ],
+      fileList: [],
       showDialog: false,
       previewURL: '',
       percentage: 0,
