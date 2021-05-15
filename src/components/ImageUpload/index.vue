@@ -28,7 +28,7 @@
     >
       <i class="el-icon-plus"/>
     </el-upload>
-
+    <el-progress v-if="showPercent" :percentage="percentage" style="width: 146px" :show-text="false"/>
     <el-dialog title="预览" :visible="showDialog" @close="showDialog=false">
       <el-row type="flex" justify="center">
         <img :src="previewURL" alt="">
@@ -56,7 +56,9 @@ export default {
         }
       ],
       showDialog: false,
-      previewURL: ''
+      previewURL: '',
+      percentage: 0,
+      showPercent: false
     }
   },
   methods: {
@@ -95,6 +97,7 @@ export default {
         this.$message.warning('图片大小不能超过' + maxSize / 1024 + 'K')
         return false
       }
+      this.showPercent = true
     },
     upload(data) {
       // 拦截掉默认上传到 action 的动作
@@ -112,12 +115,12 @@ export default {
         // 写死的标准储存类型
         StorageClass: 'STANDARD',
         // 文件对象本身
-        Body: data.file
+        Body: data.file,
         // 进度发生变化时的钩子
-        // onProgress: function(progressData) {
-        //   console.log(JSON.stringify(progressData))
-        //   console.log(progressData)
-        // }
+        onProgress: (progressData) => {
+          console.log(progressData)
+          this.percentage = progressData.percent * 100
+        }
       }, (err, data) => {
         // 第二个参数是上传完毕的回调
         console.log(err || data)
@@ -127,6 +130,9 @@ export default {
           this.fileList[0].url = 'http://' + data.Location
           this.fileList[0].status = 'success'
         }
+        setTimeout(() => {
+          this.showPercent = false
+        }, 800)
       })
     }
   }
