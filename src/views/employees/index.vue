@@ -65,6 +65,11 @@
         </el-row>
       </el-card>
       <AddEmployee :show-dialog="showDialog"/>
+      <el-dialog title="头像预览" :visible="isShowQRCode" @close="isShowQRCode = false">
+        <el-row type="flex" justify="center">
+          <canvas ref="mycanvas"/>
+        </el-row>
+      </el-dialog>
     </div>
   </div>
 </template>
