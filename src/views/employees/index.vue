@@ -25,6 +25,11 @@
               {{ ((page.page - 1) * page.size) + (scope.$index + 1) }}
             </template>
           </el-table-column>
+          <el-table-column label="头像" sortable="" width="200">
+            <template slot-scope="{row}">
+              <img class="avatar" :src="row.staffPhoto" alt="">
+            </template>
+          </el-table-column>
           <el-table-column label="姓名" sortable="" prop="username"/>
           <el-table-column label="工号" sortable="" prop="workNumber"/>
           <el-table-column label="聘用形式" sortable="" prop="formOfEmployment" :formatter="formatFormEmployment"/>
@@ -181,6 +186,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.avatar {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
 </style>
