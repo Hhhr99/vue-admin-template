@@ -16,7 +16,7 @@
           <el-table-column align="center" label="操作">
             <template slot-scope="{row}">
               <el-button v-if="row.type === 1" type="text" @click="addPermission(2, row.id)">添加</el-button>
-              <el-button type="text">编辑</el-button>
+              <el-button type="text" @click="editPermission(row.id)">编辑</el-button>
               <el-button type="text" @click="delPermission(row.id)">删除</el-button>
             </template>
           </el-table-column>
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { delPermission, getPermissionList, addPermission } from '@/api/permission'
+import { delPermission, getPermissionList, addPermission, getPermissionDetail, updatePermission } from '@/api/permission'
 import { listToTreeData } from '@/utils'
 
 export default {
@@ -101,7 +101,13 @@ export default {
       // 表单校验
       await this.$refs.perForm.validate()
       // 发请求
-      await addPermission(this.formData)
+      // await addPermission(this.formData)
+      if (this.formData.id) {
+        // 编辑
+        await updatePermission(this.formData)
+      } else {
+        await addPermission(this.formData)
+      }
       // 提醒用户
       this.$message.success('操作成功')
       // 刷新页面数据
@@ -128,6 +134,12 @@ export default {
     addPermission(type, pid) {
       this.formData.type = type
       this.formData.pid = pid
+      this.showDialog = true
+    },
+    async editPermission(id) {
+      // 1. 回显
+      this.formData = await getPermissionDetail(id)
+      // 2. 弹窗
       this.showDialog = true
     },
     async getPermissionList() {
