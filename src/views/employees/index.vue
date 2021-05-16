@@ -70,7 +70,7 @@
           <canvas ref="mycanvas"/>
         </el-row>
       </el-dialog>
-      <AssignRole :show-role-dialog="showRoleDialog"/>
+      <AssignRole ref="assignRole" :user-id="userId" :show-role-dialog.sync="showRoleDialog"/>
     </div>
   </div>
 </template>
@@ -103,15 +103,18 @@ export default {
       showDialog: false,
       isShowQRCode: false,
       // 分配角色功能
-      showRoleDialog: false
+      showRoleDialog: false,
+      userId: ''
     }
   },
   created() {
     this.getEmployeeList()
   },
   methods: {
-    assignRole(id) {
+    async assignRole(id) {
       console.log(id)
+      await this.$refs.assignRole.getUserDetailById(id)
+      this.userId = id
       this.showRoleDialog = true
     },
     async deleteEmployee(id) {
