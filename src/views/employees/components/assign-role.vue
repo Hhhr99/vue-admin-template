@@ -25,6 +25,7 @@
 
 <script>
 import { getRoleList } from '@/api/setting'
+import { getUserDetailById } from '@/api/user'
 
 export default {
   props: {
@@ -46,6 +47,11 @@ export default {
     async getRoleList() {
       const { rows } = await getRoleList()
       this.allRoles = rows
+    },
+    async getUserDetailById(id) {
+      const { roleIds } = await getUserDetailById(id)
+      console.log('这是点击父组件的角色按钮')
+      this.checkList = roleIds
     }
   }
 }
