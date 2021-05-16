@@ -4,7 +4,7 @@
       <!-- 靠右的按钮 -->
       <page-tools>
         <template v-slot:after>
-          <el-button type="primary" size="small">添加权限</el-button>
+          <el-button type="primary" size="small" @click="addPermission(1, '0')">添加权限</el-button>
         </template>
       </page-tools>
       <el-card>
@@ -15,7 +15,7 @@
           <el-table-column align="center" label="描述" prop="description"/>
           <el-table-column align="center" label="操作">
             <template slot-scope="{row}">
-              <el-button type="text">添加</el-button>
+              <el-button v-if="row.type === 1" type="text" @click="addPermission(2, row.id)">添加</el-button>
               <el-button type="text">编辑</el-button>
               <el-button type="text" @click="delPermission(row.id)">删除</el-button>
             </template>
@@ -100,6 +100,11 @@ export default {
     btnOK() {
     },
     btnCancel() {
+    },
+    addPermission(type, pid) {
+      this.formData.type = type
+      this.formData.pid = pid
+      this.showDialog = true
     },
     async getPermissionList() {
       this.list = listToTreeData(await getPermissionList(), '0')
