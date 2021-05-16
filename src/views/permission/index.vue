@@ -32,7 +32,7 @@
           <el-form-item label="权限标识" prop="code">
             <el-input v-model="formData.code" style="width:90%"/>
           </el-form-item>
-          <el-form-item label="权限描述">
+          <el-form-item label="权限描述" prop="description">
             <el-input v-model="formData.description" style="width:90%"/>
           </el-form-item>
           <el-form-item label="开启">
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { delPermission, getPermissionList } from '@/api/permission'
+import { delPermission, getPermissionList, addPermission } from '@/api/permission'
 import { listToTreeData } from '@/utils'
 
 export default {
@@ -67,7 +67,7 @@ export default {
         name: '',
         code: '',
         description: '',
-        enVisible: '',
+        enVisible: '1',
 
         pid: '',
         type: ''
@@ -97,9 +97,33 @@ export default {
     this.getPermissionList()
   },
   methods: {
-    btnOK() {
+    async btnOK() {
+      // 表单校验
+      await this.$refs.perForm.validate()
+      // 发请求
+      await addPermission(this.formData)
+      // 提醒用户
+      this.$message.success('操作成功')
+      // 刷新页面数据
+      this.getPermissionList()
+      // 关闭弹窗
+      this.showDialog = false
     },
     btnCancel() {
+      // 1. 清空表单数据
+      this.formData = {
+        name: '',
+        code: '',
+        description: '',
+        enVisible: '1',
+
+        pid: '',
+        type: ''
+      }
+      // 2. 清理校验
+      this.$refs.perForm.resetFields()
+      // 3. 关闭弹窗
+      this.showDialog = false
     },
     addPermission(type, pid) {
       this.formData.type = type
