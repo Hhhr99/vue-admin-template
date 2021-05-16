@@ -52,7 +52,7 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
+              <el-button type="text" size="small" @click="assignRole(row.id)">角色</el-button>
               <el-button type="text" size="small" @click="deleteEmployee(row.id)">删除</el-button>
             </template>
           </el-table-column>
@@ -70,6 +70,7 @@
           <canvas ref="mycanvas"/>
         </el-row>
       </el-dialog>
+      <AssignRole :show-role-dialog="showRoleDialog"/>
     </div>
   </div>
 </template>
@@ -84,9 +85,11 @@ import { delEmployee } from '@/api/employees'
 // import {export_json_to_excel} from '@/vendor/Export2Excel'
 import { formatDate } from '@/filters'
 import AddEmployee from './components/add-employee'
+import AssignRole from '@/views/employees/components/assign-role'
 
 export default {
   components: {
+    AssignRole,
     AddEmployee
   },
   data() {
@@ -97,13 +100,20 @@ export default {
         size: 5,
         total: 0
       },
-      showDialog: false
+      showDialog: false,
+      isShowQRCode: false,
+      // 分配角色功能
+      showRoleDialog: false
     }
   },
   created() {
     this.getEmployeeList()
   },
   methods: {
+    assignRole(id) {
+      console.log(id)
+      this.showRoleDialog = true
+    },
     async deleteEmployee(id) {
       try {
         await this.$confirm('您确定删除该员工吗')
