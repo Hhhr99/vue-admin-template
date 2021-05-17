@@ -13,6 +13,7 @@ const actions = {
     // 筛选出名字存在于 menus 里面的路由
     const res = asyncRoutes.filter(route => menus.includes(route.name))
     console.log(res)
+    return res
   }
 }
 

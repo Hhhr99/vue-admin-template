@@ -24,8 +24,10 @@ router.beforeEach(async(to, from, next) => {
         const res = await store.dispatch('user/getUserInfo')
         // 如果 action return 了数据, 这边可以直接获取
         console.log('触发筛选过程')
-        await store.dispatch('permission/filterRoutes', res.roles.menus)
+        // await store.dispatch('permission/filterRoutes', res.roles.menus)
+        const routes = await store.dispatch('permission/filterRoutes', res.roles.menus)
         // store.state.user.userInfo.roles.menus
+        router.addRoutes(routes)
         // 这里是第一次进入页面(刷新)获取用户资料
         // 用户资料里面有权限列表可以用来做筛选
         // 将筛选的逻辑放入到 vuex 里面
