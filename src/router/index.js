@@ -102,7 +102,8 @@ const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   // 这里是创建路由实例的地方, 传进来一个数组作为路由配置
-  routes: [...constantRoutes, ...asyncRoutes]
+  // routes: [...constantRoutes, ...asyncRoutes]
+  routes: [...constantRoutes]
 })
 
 const router = createRouter()
