@@ -1,5 +1,6 @@
 import { login, getUserInfo, getUserDetailById } from '@/api/user'
-import { setToken, getToken, removeToken,setTime  } from '@/utils/auth'
+import { setToken, getToken, removeToken, setTime } from '@/utils/auth'
+import { resetRouter } from '@/router'
 
 const state = {
   token: getToken(),
@@ -58,6 +59,15 @@ const actions = {
   async logout(store) {
     store.commit('removeToken')
     store.commit('removeUserInfo')
+    // 清空后来添加的路由配置
+    resetRouter()
+    // 清空菜单配置
+    // 如果要调用兄弟之间的 mutations
+    // 需要添加第三个参数, 指定查找模块是, 以根模块作为起点
+    // root: true
+    store.commit('permission/setRoutes', [], {
+      root: true
+    })
   }
 }
 
