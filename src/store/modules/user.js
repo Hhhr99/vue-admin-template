@@ -53,6 +53,7 @@ const actions = {
       ...detail
     }
     store.commit('setUserInfo', data)
+    return data
   },
   async logout(store) {
     store.commit('removeToken')
