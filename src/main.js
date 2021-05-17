@@ -56,6 +56,10 @@ for (const key in filters) {
   // console.log(fn)
   Vue.filter(name, fn)
 }
+// 混入的演示
+// Vue.mixin(混入对象)
+import mixinObj from '@/mixin'
+Vue.mixin(mixinObj)
 
 new Vue({
   el: '#app',

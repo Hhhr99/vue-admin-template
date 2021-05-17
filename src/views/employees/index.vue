@@ -111,12 +111,12 @@ export default {
     this.getEmployeeList()
   },
   methods: {
-    checkPermission(pointName) {
-      // 这里是判断当前用户是否有权限的函数
-      // 如果这个权限点名称存在于用户数据的points 权限数组中就可以点击
-      // 否则则不能
-      return this.$store.getter.roles && this.$store.getter.roles.points.includes(pointName)
-    },
+    // checkPermission(pointName) {
+    //   // 这里是判断当前用户是否有权限的函数
+    //   // 如果这个权限点名称存在于用户数据的points 权限数组中就可以点击
+    //   // 否则则不能
+    //   return this.$store.getter.roles && this.$store.getter.roles.points.includes(pointName)
+    // },
     async assignRole(id) {
       console.log(id)
       await this.$refs.assignRole.getUserDetailById(id)
