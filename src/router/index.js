@@ -30,7 +30,9 @@ import Layout from '@/layout'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
+import user from './modules/user'
 export const constantRoutes = [
+  user,
   {
     path: '/login',
     component: () => import('@/views/login/index'),
@@ -59,6 +61,7 @@ export const constantRoutes = [
       meta: { title: '首页', icon: 'dashboard' }
     }]
   },
+
   {
     path: '/import',
     component: Layout,
@@ -70,7 +73,7 @@ export const constantRoutes = [
         meta: { title: '导入' }
       }
     ]
-  },
+  }
 
   // 404 page must be placed at the end !!!
   // 现在还要等路由守卫筛选动态路由后才能判断到底是不是 404

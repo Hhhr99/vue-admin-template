@@ -1,21 +1,15 @@
 <template>
-  <div>
-    <!-- 1. 准备 dom -->
-    <div id="chartWrapper" ref="myChart" />
-  </div>
+  <div><div id="chartWrapper" ref="myChart" /></div>
 </template>
 
 <script>
-// 2. 导入
 import * as echarts from 'echarts'
 export default {
   mounted() {
-    // 3. 初始化
     const myChart = echarts.init(this.$refs.myChart)
-    // 4.画图
     myChart.setOption({
       textStyle: {
-        fontSize: 18
+        fontStyle: 18
       },
       color: ['#ff0000', '#00ff00', '#0000ff', '#ee6666', '#73c0de', '#3ba272', '#fc8452', '#9a60b4', '#ea7ccc'],
       radar: {
@@ -40,10 +34,6 @@ export default {
           {
             value: [5000, 14000, 28000, 26000, 42000, 21000],
             name: '实际开销（Actual Spending）'
-          },
-          {
-            value: [3800, 10000, 21500, 30000, 32000, 1000],
-            name: '测试数据（Actual Spending）'
           }
         ]
       }]
@@ -53,8 +43,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#chartWrapper {
-  width: 600px;
-  height: 400px;
+#chartWrapper{
+    width: 600px;
+    height: 400px;
 }
 </style>
