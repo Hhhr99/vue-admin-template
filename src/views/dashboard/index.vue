@@ -83,7 +83,7 @@
           <div slot="header" class="header">
             <span>绩效指数</span>
           </div>
-          <!-- 放置雷达图 -->
+          <Radar></Radar>
         </el-card>
         <!-- 帮助连接 -->
         <el-card class="box-card">
@@ -121,10 +121,12 @@
 <script>
 import { mapGetters } from 'vuex'
 import Calendar from './components/calendar'
+import Radar from '@/views/dashboard/components/radar'
 
 export default {
   name: 'Dashboard',
   components: {
+    Radar,
     Calendar
   },
   computed: {
