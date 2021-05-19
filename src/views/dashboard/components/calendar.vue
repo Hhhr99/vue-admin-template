@@ -26,6 +26,8 @@ export default {
   filters: {
     getDay(oldVal) {
       const newDate = oldVal.split('-')[2]
+      // console.log(newDate)
+      console.log(oldVal)
       return newDate.startsWith('0') ? newDate.substr(1) : newDate
     }
   },
@@ -46,7 +48,7 @@ export default {
     },
     dateChange() {
       // 每当年份月份发生变化, 重新创建一个日期替换掉 this.currentDate
-      this.currentDate = new Date(this.currentYear + this.currentMonth + '1')
+      this.currentDate = new Date(`${this.currentYear} - ${this.currentMonth} - 1`)
     },
     getYearList() {
       this.currentYear = this.currentDate.getFullYear()
