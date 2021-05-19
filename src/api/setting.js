@@ -33,7 +33,6 @@ export function updateRole(data) {
     method: 'put'
   })
 }
-
 /**
  * 获取角色详情
  * **/
@@ -51,5 +50,14 @@ export function addRole(data) {
     url: '/sys/role',
     data,
     method: 'post'
+  })
+}
+
+// 给角色分配权限
+export function assignPermission(data) {
+  return request({
+    url: '/sys/role/assignPrem',
+    method: 'put',
+    data
   })
 }

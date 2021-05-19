@@ -24,11 +24,11 @@ export function importEmployee(data) {
   })
 }
 
-// 删除员工
+// 删除员工接口
 export function delEmployee(id) {
   return request({
-    method: 'delete',
-    url: `/sys/user/${id}`
+    url: '/sys/user/' + id,
+    method: 'delete'
   })
 }
 
@@ -40,6 +40,7 @@ export function addEmployee(data) {
     data
   })
 }
+
 /** *
  *
  * 保存员工的基本信息
@@ -51,6 +52,7 @@ export function saveUserDetailById(data) {
     data
   })
 }
+
 /** *
  *  读取用户详情的基础信息
  * **/
