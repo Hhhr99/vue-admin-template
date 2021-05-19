@@ -28,7 +28,10 @@ export default {
     this.getYearList()
   },
   methods: {
-    dateChange() {},
+    dateChange() {
+      // 每当年份月份发生变化, 重新创建一个日期替换掉 this.currentDate
+      this.currentDate = new Date(this.currentYear + this.currentMonth + '1')
+    },
     getYearList() {
       this.currentYear = this.currentDate.getFullYear()
       this.currentMonth = this.currentDate.getMonth() + 1
