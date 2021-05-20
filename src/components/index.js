@@ -7,6 +7,7 @@ import ImageUpload from '@/components/ImageUpload'
 import ScreenFull from '@/components/ScreenFull'
 import ThemePicker from '@/components/ThemePicker'
 import LangSwitch from '@/components/LangSwitch'
+import TagsView from '@/components/TagsView'
 export default {
   install(Vue) {
     Vue.component('PageTools', PageTools)
@@ -15,5 +16,6 @@ export default {
     Vue.component('ScreenFull', ScreenFull)
     Vue.component('ThemePicker', ThemePicker)
     Vue.component('LangSwitch', LangSwitch)
+    Vue.component('TagsView', TagsView)
   }
 }
