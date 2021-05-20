@@ -3,19 +3,24 @@ import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 // 2. use注册
 Vue.use(VueI18n)
+// 引入饿了么预设语言包
+import elementZH from 'element-ui/lib/locale/lang/zh-CN'
+import elementEN from 'element-ui/lib/locale/lang/en'
 // 3. 创建实例
 export default new VueI18n({
   // 1. 设定当前语言
-  locale: 'zh',
+  locale: 'en',
   // 2. 设定字典
   messages: {
     zh: {
       hi: '你好丫',
-      gd: '祝你开心每一天'
+      gd: '祝你开心每一天',
+      ...elementZH
     },
     en: {
       hi: 'WHat\'s up',
-      gd: 'Have a good day'
+      gd: 'Have a good day',
+      ...elementEN
     }
   }
 })
