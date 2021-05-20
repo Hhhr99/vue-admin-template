@@ -6,6 +6,7 @@ import UploadExcel from '@/components/UploadExcel'
 import ImageUpload from '@/components/ImageUpload'
 import ScreenFull from '@/components/ScreenFull'
 import ThemePicker from '@/components/ThemePicker'
+import LangSwitch from '@/components/LangSwitch'
 export default {
   install(Vue) {
     Vue.component('PageTools', PageTools)
@@ -13,5 +14,6 @@ export default {
     Vue.component('ImageUpload', ImageUpload)
     Vue.component('ScreenFull', ScreenFull)
     Vue.component('ThemePicker', ThemePicker)
+    Vue.component('LangSwitch', LangSwitch)
   }
 }
