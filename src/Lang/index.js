@@ -14,7 +14,7 @@ import customEN from './en'
 // 3. 创建实例
 export default new VueI18n({
   // 1. 设定当前语言
-  locale: 'cn',
+  locale: 'zh',
   // 2. 设定字典
   messages: {
     zh: {
