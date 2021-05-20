@@ -31,6 +31,7 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 import user from './modules/user'
+
 export const constantRoutes = [
   user,
   {
@@ -103,7 +104,8 @@ export const asyncRoutes = [
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
+  mode: 'history', // require service support
+  base: '/hr/',
   scrollBehavior: () => ({ y: 0 }),
   // 这里是创建路由实例的地方, 传进来一个数组作为路由配置
   // routes: [...constantRoutes, ...asyncRoutes]
