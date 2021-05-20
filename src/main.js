@@ -15,6 +15,8 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import i18n from '@/Lang'
+
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明
@@ -40,6 +42,7 @@ Vue.directive('imgerr', imgerr)
 //   obj.install(Vue)
 // }
 import myComponents from '@/components'
+
 Vue.use(myComponents)
 
 // 过滤器的注册
@@ -59,10 +62,12 @@ for (const key in filters) {
 // 混入的演示
 // Vue.mixin(混入对象)
 import mixinObj from '@/mixin'
+
 Vue.mixin(mixinObj)
 
 new Vue({
   el: '#app',
+  i18n,
   router,
   store,
   render: h => h(App)
